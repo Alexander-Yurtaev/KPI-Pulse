@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Settings.axaml.cs">
+      <DependentUpon>Settings.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Analytics.axaml.cs">
       <DependentUpon>Analytics.axaml</DependentUpon>
     </Compile>
