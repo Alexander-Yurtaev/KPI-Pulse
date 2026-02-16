@@ -30,14 +30,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Settings.axaml.cs">
-      <DependentUpon>Settings.axaml</DependentUpon>
+    <Compile Update="Views\IndexView.axaml.cs">
+      <DependentUpon>IndexView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Analytics.axaml.cs">
-      <DependentUpon>Analytics.axaml</DependentUpon>
+    <Compile Update="Views\SettingsView.axaml.cs">
+      <DependentUpon>SettingsView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Dashboard.axaml.cs">
-      <DependentUpon>Dashboard.axaml</DependentUpon>
+    <Compile Update="Views\AnalyticsView.axaml.cs">
+      <DependentUpon>AnalyticsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DashboardView.axaml.cs">
+      <DependentUpon>DashboardView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
