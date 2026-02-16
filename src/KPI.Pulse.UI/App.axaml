@@ -1,15 +1,32 @@
 <Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="KPI.Pulse.UI.App"
-             xmlns:local="using:KPI.Pulse.UI"
-             RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 x:Class="KPI.Pulse.UI.App"
+			 xmlns:local="using:KPI.Pulse.UI"
+			 RequestedThemeVariant="Default">
+	<!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
-  
-    <Application.Styles>
-        <FluentTheme />
-    </Application.Styles>
+	<Application.Resources>
+		<LinearGradientBrush x:Key="WindowGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+			<GradientStop Color="#667eea" Offset="0"/>
+			<GradientStop Color="#764ba2" Offset="1"/>
+		</LinearGradientBrush>
+	</Application.Resources>
+
+	<Application.DataTemplates>
+		<local:ViewLocator/>
+	</Application.DataTemplates>
+
+	<Application.Styles>
+		<FluentTheme />
+        <Style Selector="Border.container">
+            <Setter Property="Background" Value="{StaticResource WindowGradient}"/>
+        </Style>
+		<Style Selector="Border.card">
+			<Setter Property="Background" Value="#faffffff"/>
+			<Setter Property="CornerRadius" Value="32"/>
+			<Setter Property="BoxShadow" Value="0 20 40 #1a000000"/>
+        </Style>
+	</Application.Styles>
+
+
 </Application>
