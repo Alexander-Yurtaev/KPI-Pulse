@@ -197,7 +197,9 @@
             <ScrollViewer Grid.Row="1" Classes="nav">
                 <Border>
                     <Grid RowDefinitions="Auto,*">
-                        <ItemsControl ItemsSource="{Binding NavItems}">
+                        <ItemsControl Grid.Row="0" 
+                                      ItemsSource="{Binding NavItems}" 
+                                      HorizontalAlignment="Stretch">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <UniformGrid ColumnSpacing="20" RowSpacing="20" Columns="3"/>
@@ -205,13 +207,19 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="models:NavItem">
-                                    <Border Classes="nav">
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock Classes="icon" Text="{Binding Icon}"/>
-                                            <TextBlock Classes="title" Text="{Binding Title}" TextWrapping="WrapWithOverflow"/>
-                                            <TextBlock Classes="subtitle" Text="{Binding Subtitle}"/>
-                                        </StackPanel>
-                                    </Border>
+                                    <Button>
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Border Classes="nav">
+                                                    <StackPanel Orientation="Vertical">
+                                                        <TextBlock Classes="icon" Text="{Binding Icon}"/>
+                                                        <TextBlock Classes="title" Text="{Binding Title}" TextWrapping="WrapWithOverflow"/>
+                                                        <TextBlock Classes="subtitle" Text="{Binding Subtitle}"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
