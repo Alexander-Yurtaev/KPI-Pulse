@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="900"
-        MinHeight="900"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="930"
+        MinHeight="930" WindowStartupLocation="CenterScreen"
         x:Class="KPI.Pulse.UI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/KPI-logo.ico"
@@ -24,7 +24,7 @@
         </Style>
         <Style Selector="Border.header">
             <Setter Property="Padding" Value="40"/>
-            <Setter Property="Margin" Value="0,0,0,40"/>
+            <Setter Property="Margin" Value="0,0,0,30"/>
         </Style>
         <Style Selector="Border.badge">
             <Setter Property="Background" Value="{StaticResource WindowGradient}"/>
@@ -69,9 +69,13 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="500"/>
         </Style>
+        <Style Selector="ScrollViewer.nav">
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
         <Style Selector="Border.nav">
             <Setter Property="Background" Value="White"/>
             <Setter Property="CornerRadius" Value="24"/>
+            <Setter Property="Margin" Value="4"/>
             <Setter Property="Padding" Value="24"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -96,7 +100,7 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="CornerRadius" Value="24"/>
             <Setter Property="Padding" Value="30"/>
-            <Setter Property="Margin" Value="0,40,0,0"/>
+            <Setter Property="Margin" Value="0,30,0,0"/>
         </Style>
         <Style Selector="Border.tech-stack TextBlock.icon">
             <Setter Property="Margin" Value="0,0,5,0"/>
@@ -118,6 +122,31 @@
         </Style>
         <Style Selector="TextBlock.footer">
             <Setter Property="Foreground" Value="#ccffffff"/>
+        </Style>
+        <Style Selector="Border.nav">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition
+                        Property="RenderTransform"
+                        Duration="0:0:0.3"
+                        Easing="CubicEaseOut"/>
+
+                    <BoxShadowsTransition
+                        Property="BoxShadow"
+                        Duration="0:0:0.3"
+                        Easing="CubicEaseOut"/>
+
+                    <BrushTransition
+                        Property="BorderBrush"
+                        Duration="0:0:0.3"
+                        Easing="CubicEaseOut"/>
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Border.nav:pointerover">
+            <Setter Property="RenderTransform" Value="translate(0, -4px)"/>
+            <Setter Property="BorderBrush" Value="#667eea"/>
+            <Setter Property="BoxShadow" Value="0 20 30 #33667eea"/>
         </Style>
     </Window.Styles>
 
@@ -165,7 +194,7 @@
                     </ItemsControl>
                 </Grid>
             </Border>
-            <ScrollViewer Grid.Row="1">
+            <ScrollViewer Grid.Row="1" Classes="nav">
                 <Border>
                     <Grid RowDefinitions="Auto,*">
                         <ItemsControl ItemsSource="{Binding NavItems}">
