@@ -28,4 +28,10 @@
   <ItemGroup>
     <ProjectReference Include="..\KPU.Pulse.DataAccess\KPU.Pulse.DataAccess.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Dashboard.axaml.cs">
+      <DependentUpon>Dashboard.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
