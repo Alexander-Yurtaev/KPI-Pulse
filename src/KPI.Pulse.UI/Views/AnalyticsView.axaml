@@ -6,6 +6,7 @@
              xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KPI.Pulse.UI.Views.AnalyticsView"
-             x:DataType="vm:AnalyticsViewModel">
+             x:DataType="vm:AnalyticsViewModel"
+             x:CompileBindings="True">
     Welcome to Analytics!
 </UserControl>

@@ -6,6 +6,39 @@
              xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KPI.Pulse.UI.Views.DashboardView"
-             x:DataType="vm:DashboardViewModel">
-  Welcome to Dashboard!
+             x:DataType="vm:DashboardViewModel"
+             x:CompileBindings="True">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:DashboardViewModel/>
+    </Design.DataContext>
+
+    <Border Classes="container" Padding="20,40">
+        <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <Border Grid.Row="0" Classes="card">
+                <Grid ColumnDefinitions="Auto,Auto,*,Auto,*,Auto">
+                    <Grid Grid.Column="0" 
+                          ColumnSpacing="10" 
+                          ColumnDefinitions="Auto,Auto,Auto">
+                        <TextBlock Grid.Column="0" Classes="icon" Text=""/>
+                        <TextBlock Grid.Column="1" Classes="title" Text=""/>
+                    </Grid>
+                    <TextBlock Grid.Column="2" Classes="badge" Text="badge"/>
+                    <TextBlock Grid.Column="4" Classes="menu" Text="menu"/>
+                    <TextBlock Grid.Column="5" Classes="menu" Text="info"/>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1" Classes="card">
+                <TextBlock Text="Indicators"/>
+            </Border>
+            <Border Grid.Row="2" Classes="card">
+                <TextBlock Text="Bar"/>
+            </Border>
+            <Border Grid.Row="3" Classes="card">
+                <TextBlock Text="Alerts"/>
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>

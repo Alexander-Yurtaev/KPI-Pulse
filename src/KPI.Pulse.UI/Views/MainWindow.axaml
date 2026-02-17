@@ -4,14 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="930"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="930"
         MinHeight="930" WindowStartupLocation="CenterScreen"
         xmlns:rxui="http://reactiveui.net"
         xmlns:ui="clr-namespace:KPI.Pulse.UI"
+        xmlns:local="clr-namespace:KPI.Pulse.UI.Converters"
+        xmlns:views="clr-namespace:KPI.Pulse.UI.Views"
         x:Class="KPI.Pulse.UI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
+        x:CompileBindings="True"
         Icon="/Assets/KPI-logo.ico"
-        Title="KPI.Pulse.UI">
+        Title="KPI.Pulse.UI"
+        x:Name="MainWindowRoot">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -19,10 +23,141 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <rxui:RoutedViewHost Router="{Binding Router}">
-        <rxui:RoutedViewHost.ViewLocator>
-            <ui:AppViewLocator/>
-        </rxui:RoutedViewHost.ViewLocator>
-    </rxui:RoutedViewHost>
+    <Window.Styles>
+        <Style Selector="Border.green">
+            <Setter Property="Background" Value="Green"/>
+        </Style>
+        <Style Selector="Window">
+            <Setter Property="Background" Value="#f0f2f5"/>
+        </Style>
+        <Style Selector="Border.head">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="BoxShadow" Value="0 2 8 0 #0D000000"/>
+        </Style>
+        <Style Selector="TextBlock.logo">
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style Selector="TextBlock.title">
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
+        <Style Selector="Border.badge">
+            <Setter Property="Background" Value="{StaticResource WindowGradient}"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Margin" Value="8,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="TextBlock.badge-title">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="StackPanel.nav">
+            <Setter Property="Spacing" Value="20"/>
+        </Style>
+        <Style Selector="RadioButton.nav-link">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#4a5568"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ControlTemplate.Content>
+                        <Border Height="{TemplateBinding Height}"
+                                Width="{TemplateBinding Width}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter
+                                Name="PART_ContentPresenter"
+                                Margin="{TemplateBinding Padding}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                RecognizesAccessKey="True"/>
+                        </Border>
+                    </ControlTemplate.Content>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="RadioButton:checked">
+            <Setter Property="Background" Value="#667eea"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="TextBlock.state">
+            <Setter Property="Margin" Value="5,0"></Setter>
+        </Style>
+        <Style Selector="TextBlock.on-line-icon">
+            <Setter Property="Margin" Value="2,0"></Setter>
+        </Style>
+        <Style Selector="TextBlock.on-line">
+            <Setter Property="Margin" Value="5,0,5,0"></Setter>
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0" Classes="head" IsVisible="{Binding HeadIsVisible}">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto,*,Auto">
+                <Grid Grid.Column="0" ColumnDefinitions="Auto,*" VerticalAlignment="Center">
+                    <TextBlock Grid.Column="0" Classes="logo" Text="📊"/>
+                    <TextBlock Grid.Column="1" Classes="logo title" Text="KPL Pulse"/>
+                </Grid>
+                <Border Grid.Column="1" Classes="badge">
+                    <TextBlock Classes="badge-title" Text="Avalonia Concept"/>
+                </Border>
+                <ItemsControl Grid.Column="3" 
+                              x:Name="NavItemsControl"
+                              ItemsSource="{Binding NavItems}"
+                              x:DataType="vm:MainWindowViewModel">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Classes="nav" Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="models:NavItem">
+                            <RadioButton Classes="nav-link"
+                                         GroupName="NavGroup"
+                                         Content="{Binding Title}"
+                                         x:CompileBindings="False">
+                                <RadioButton.IsChecked>
+                                    <MultiBinding Converter="{x:Static local:RadioButtonCheckedConverter.Instance}">
+                                        <Binding Path="DataContext.SelectedNavItem" ElementName="MainWindowRoot"/>
+                                        <Binding />
+                                    </MultiBinding>
+                                </RadioButton.IsChecked>
+                                <RadioButton.Command>
+                                    <Binding Path="DataContext.NavigateToNavItemCommand" ElementName="MainWindowRoot"/>
+                                </RadioButton.Command>
+                                <RadioButton.CommandParameter>
+                                    <Binding />
+                                </RadioButton.CommandParameter>
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Grid Grid.Column="5" 
+                      VerticalAlignment="Center"
+                      ColumnDefinitions="Auto,Auto,*,Auto,Auto">
+                    <TextBlock Grid.Column="0" Classes="list-dot" Text="🟢" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Classes="state" Text="Данные обновлены: 12:34:56"/>
+                    <TextBlock Grid.Column="3" Classes="on-line-icon" Text="⚡"/>
+                    <TextBlock Grid.Column="4" Classes="on-line" Text="Live"/>
+                </Grid>
+            </Grid>
+        </Border>
+        
+        <rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}">
+            <rxui:RoutedViewHost.ViewLocator>
+                <ui:AppViewLocator/>
+            </rxui:RoutedViewHost.ViewLocator>
+        </rxui:RoutedViewHost>
+    </Grid>
 
 </Window>

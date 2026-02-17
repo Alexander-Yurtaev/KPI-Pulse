@@ -1,6 +1,8 @@
 ﻿using System;
 using Avalonia;
+using KPI.Pulse.UI.Services;
 using ReactiveUI.Avalonia;
+using Splat;
 
 namespace KPI.Pulse.UI
 {
@@ -15,10 +17,14 @@ namespace KPI.Pulse.UI
 
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
+        {
+            Locator.CurrentMutable.RegisterLazySingleton<IUiService>(() => new UiService());
+
+            return AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .WithInterFont()
                 .LogToTrace()
                 .UseReactiveUI();
+        }
     }
 }

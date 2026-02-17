@@ -6,7 +6,8 @@
              xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="930"
              x:Class="KPI.Pulse.UI.Views.IndexView"
-             x:DataType="vm:IndexViewModel">
+             x:DataType="vm:IndexViewModel"
+             x:CompileBindings="True">
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
@@ -107,10 +108,6 @@
             <Setter Property="Margin" Value="0,0,0,20"/>
         </Style>
         <Style Selector="Border.tech-icon">
-            <Setter Property="Width" Value="8"/>
-            <Setter Property="Height" Value="8"/>
-            <Setter Property="Background" Value="#667eea"/>
-            <Setter Property="CornerRadius" Value="4"/>
         </Style>
         <Style Selector="Grid.footer-container">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -203,7 +200,9 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="models:NavItem">
-                                    <Button Command="{Binding GoTo}">
+                                    <Button Command="{Binding DataContext.NavigateToNavItemCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                                            CommandParameter="{Binding}"
+                                            x:CompileBindings="False">
                                         <Button.Template>
                                             <ControlTemplate>
                                                 <Border Classes="nav">
@@ -237,7 +236,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="models:TechItem">
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <Border Classes="tech-icon" />
+                                    <TextBlock Classes="tech-icon list-dot" Text="🔵" VerticalAlignment="Center" />
                                     <TextBlock Classes="tech-title" Text="{Binding Title}"/>
                                 </StackPanel>
                             </DataTemplate>

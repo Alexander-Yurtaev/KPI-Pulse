@@ -26,6 +26,9 @@
 			<Setter Property="CornerRadius" Value="32"/>
 			<Setter Property="BoxShadow" Value="0 20 40 #1a000000"/>
         </Style>
+        <Style Selector="TextBlock.list-dot">
+            <Setter Property="FontSize" Value="8"/>
+        </Style>
 	</Application.Styles>
 
 

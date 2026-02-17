@@ -1,8 +1,11 @@
 ﻿using KPI.Pulse.UI.Models;
+using KPI.Pulse.UI.Services;
+using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUI;
+using System.Reactive;
 
 namespace KPI.Pulse.UI.ViewModels
 {
@@ -16,40 +19,26 @@ namespace KPI.Pulse.UI.ViewModels
         public IEnumerable<TechItem> TechItems { get; init; }
         public int TechColumns { get; init; }
 
+        public ReactiveCommand<NavItem, Unit> NavigateToNavItemCommand { get; }
+
         public IndexViewModel(IScreen screen)
         {
             HostScreen = screen;
+            var uiService = Locator.Current.GetService<IUiService>() ??
+                            throw new InvalidOperationException(nameof(IUiService));
 
-            PlatformItems = GetPlatforms();
-            NavItems = GetNavItems();
-            TechItems = GetTechItems();
+            PlatformItems = uiService.GetPlatforms();
+            NavItems = uiService.GetNavItems(HostScreen);
+            TechItems = uiService.GetTechItems();
             TechColumns = Math.Min(TechItems.Count(), 4);
+
+            NavigateToNavItemCommand = ReactiveCommand.Create<NavItem>(item =>
+            {
+                if (HostScreen is IInteractionViewModel interactionVm)
+                {
+                    interactionVm.NavigateToNavItem.Handle(item.Id).Subscribe();
+                }
+            });
         }
-
-        #region Private Methhods
-
-        private IEnumerable<PlatformItem> GetPlatforms()
-        {
-            yield return new PlatformItem("🖥️", "Windows 10/11");
-            yield return new PlatformItem("🐧", "Linux (Ubuntu, Debian, Fedora)");
-            yield return new PlatformItem("🍏", "macOS (Intel и Apple Silicon)");
-        }
-
-        private IEnumerable<NavItem> GetNavItems()
-        {
-            yield return new NavItem("📊", "Дашборд", "Главный экран с KPI-карточками и графиками", () => HostScreen.Router.Navigate.Execute(new DashboardViewModel(HostScreen)));
-            yield return new NavItem("📈", "Аналитика", "Детальный просмотр данных и история изменений", () => HostScreen.Router.Navigate.Execute(new AnalyticsViewModel(HostScreen)));
-            yield return new NavItem("⚙️", "Настройки", "Конфигурация мониторов и пороговых значений", () => HostScreen.Router.Navigate.Execute(new SettingsViewModel(HostScreen)));
-        }
-
-        private IEnumerable<TechItem> GetTechItems()
-        {
-            yield return new TechItem(".NET 8");
-            yield return new TechItem("Avalonia UI 11");
-            yield return new TechItem("MVVM паттерн");
-            yield return new TechItem("JSON для хранения настроек");
-        }
-
-        #endregion Private Methhods
     }
 }
