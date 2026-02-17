@@ -17,6 +17,8 @@ namespace KPI.Pulse.UI.ViewModels
 
         public IEnumerable<DashboardIndicator> Indicators => _indicators;
 
+        public ChartViewModel Chart { get; set; }
+
         public DashboardViewModel(IScreen screen)
         {
             HostScreen = screen;
@@ -25,6 +27,7 @@ namespace KPI.Pulse.UI.ViewModels
                             throw new InvalidOperationException(nameof(IUiService));
 
             _indicators = new ObservableCollection<DashboardIndicator>(uiService.GetDashboardIndicators());
+            Chart = new ChartViewModel();
         }
     }
 }

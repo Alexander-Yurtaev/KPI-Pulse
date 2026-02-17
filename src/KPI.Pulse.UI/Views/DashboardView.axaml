@@ -1,10 +1,12 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:KPI.Pulse.UI.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
              xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
              xmlns:converters="clr-namespace:KPI.Pulse.UI.Converters"
+             xmlns:skiaSharpView="clr-namespace:LiveChartsCore.SkiaSharpView;assembly=LiveChartsCore.SkiaSharpView"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KPI.Pulse.UI.Views.DashboardView"
              x:DataType="vm:DashboardViewModel"
@@ -19,6 +21,9 @@
     <UserControl.Styles>
         <Style Selector="Border.container">
             <Setter Property="Background" Value="#f0f2f5"/>
+        </Style>
+        <Style Selector="Border.indicators-container">
+            <Setter Property="Margin" Value="0,0,0,24"/>
         </Style>
         <Style Selector="Border.indicator">
             <Setter Property="BorderThickness" Value="4,0,0,0"/>
@@ -75,12 +80,42 @@
         <Style Selector="TextBlock.threshold-value">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Foreground" Value="#718096"/>
-        </Style> 
+        </Style>
+        <Style Selector="Border.chart-container">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Margin" Value="0,0,0,24"/>
+            <Setter Property="BoxShadow" Value="0 4 12 0 #0D000000"/>
+        </Style>
+        <Style Selector="Grid.chart-header">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+        <Style Selector="TextBlock.chart-header-icon">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="TextBlock.chart-header-title">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
+        <Style Selector="Grid.chart-legend-container">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="ColumnSpan" Value="6"/>
+        </Style>
+        <Style Selector="TextBlock.chart-legend">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="8"/>
+        </Style>
+        <Style Selector="TextBlock.chart-legend.title">
+            <Setter Property="Foreground" Value="#718096"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
     </UserControl.Styles>
 
     <Border Classes="container" Padding="20,40">
         <Grid RowDefinitions="Auto,*,Auto">
-            <Border Grid.Row="0">
+            <Border Grid.Row="0" Classes="indicators-container">
                 <ItemsControl ItemsSource="{Binding Indicators}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -146,8 +181,40 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Border>
-            <Border Grid.Row="1" Classes="">
-                <TextBlock Text="Bar"/>
+            <Border Grid.Row="1" Classes="chart-container">
+                <Grid RowDefinitions="Auto,*">
+                    <Grid Grid.Row="0"
+                          Classes="chart-header"
+                          ColumnDefinitions="Auto,*,Auto">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <TextBlock Classes="chart-header-icon" Text="📈"/>
+                            <TextBlock Classes="chart-header-title" Text="Динамика ключевых показателей"/>
+                        </StackPanel>
+                        <!--<StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="20">
+                            <Grid ColumnDefinitions="Auto,*" 
+                                  Classes="chart-legend-container">
+                                <TextBlock Classes="chart-legend" Grid.Column="0" Text="🔵"/>
+                                <TextBlock Classes="chart-legend title" Grid.Column="1" Text="Выручка"/>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="Auto,*" Classes="chart-legend-container">
+                                <TextBlock Classes="chart-legend" Grid.Column="0" Text="🟢"/>
+                                <TextBlock Classes="chart-legend title" Grid.Column="1" Text="Прибыль"/>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="Auto,*" Classes="chart-legend-container">
+                                <TextBlock Classes="chart-legend" Grid.Column="0" Text="🟠"/>
+                                <TextBlock Classes="chart-legend title" Grid.Column="1" Text="Клиенты"/>
+                            </Grid>
+                        </StackPanel>-->
+                    </Grid>
+                    <lvc:CartesianChart
+                        Grid.Row="1"
+                        Series="{Binding Chart.Series}"
+                        XAxes="{Binding Chart.XAxes}"
+                        LegendPosition="Top">
+                    </lvc:CartesianChart>
+                </Grid>
             </Border>
             <Border Grid.Row="2" Classes="">
                 <TextBlock Text="Alerts"/>
