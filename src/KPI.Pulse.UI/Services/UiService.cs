@@ -28,5 +28,24 @@ namespace KPI.Pulse.UI.Services
             yield return new TechItem("MVVM паттерн");
             yield return new TechItem("JSON для хранения настроек");
         }
+
+        public IEnumerable<DashboardIndicator> GetDashboardIndicators()
+        {
+            yield return new DashboardIndicator("Выручка", "💰", "2.4M ₽", 
+                true, "▲", "+12.5 %", "к прошлому периоду",
+                "Порог:", "▼", "1.5M ₽");
+
+            yield return new DashboardIndicator("Прибыль", "📈", "845K ₽",
+                false, "▼", "-3.2 %", "к прошлому периоду",
+                "", "⚠️", "Ниже порога(1M ₽)");
+
+            yield return new DashboardIndicator("Клиенты", "👥", "1,284",
+                true, "▲", "+8.3 %", "новых",
+                "Цель:", "", "1500");
+
+            yield return new DashboardIndicator("Конверсия", "🔄", "15.8 %",
+                true, "▲", "+1.2 %", "к прошлому",
+                "Целевой диапазон:", "⚡", "14 - 18%");
+        }
     }
 }

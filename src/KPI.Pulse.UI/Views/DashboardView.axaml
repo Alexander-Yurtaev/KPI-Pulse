@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
+             xmlns:converters="clr-namespace:KPI.Pulse.UI.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KPI.Pulse.UI.Views.DashboardView"
              x:DataType="vm:DashboardViewModel"
@@ -15,28 +16,140 @@
         <vm:DashboardViewModel/>
     </Design.DataContext>
 
+    <UserControl.Styles>
+        <Style Selector="Border.container">
+            <Setter Property="Background" Value="#f0f2f5"/>
+        </Style>
+        <Style Selector="Border.indicator">
+            <Setter Property="BorderThickness" Value="4,0,0,0"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="BoxShadow" Value="0 4 12 0 #0D000000"/>
+        </Style>
+        <Style Selector="TextBlock.indicator-title">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="500"/>
+            <Setter Property="Foreground" Value="#718096"/>
+            <Setter Property="LetterSpacing" Value="0.5"/>
+        </Style>
+        <Style Selector="Border.indicator-icon">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="#f7fafc"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="TextBlock.indicator-icon">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style Selector="TextBlock.indicator-value">
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontWeight" Value="700"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+        <Style Selector="TextBlock.trend-icon">
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style Selector="TextBlock.trend-value">
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style Selector="TextBlock.trend-description">
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style Selector="Border.threshold">
+            <Setter Property="Margin" Value="0,12,0,0"/>
+            <Setter Property="Padding" Value="0,12,0,0"/>
+            <Setter Property="BorderThickness" Value="0,1,0,0"/>
+            <Setter Property="BorderBrush" Value="#e2e8f0"/>
+        </Style> 
+        <Style Selector="TextBlock.threshold-title">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#718096"/>
+        </Style> 
+        <Style Selector="TextBlock.threshold-icon">
+            <Setter Property="FontSize" Value="13"/>
+        </Style> 
+        <Style Selector="TextBlock.threshold-value">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#718096"/>
+        </Style> 
+    </UserControl.Styles>
+
     <Border Classes="container" Padding="20,40">
-        <Grid RowDefinitions="Auto,Auto,*,Auto">
-            <Border Grid.Row="0" Classes="card">
-                <Grid ColumnDefinitions="Auto,Auto,*,Auto,*,Auto">
-                    <Grid Grid.Column="0" 
-                          ColumnSpacing="10" 
-                          ColumnDefinitions="Auto,Auto,Auto">
-                        <TextBlock Grid.Column="0" Classes="icon" Text=""/>
-                        <TextBlock Grid.Column="1" Classes="title" Text=""/>
-                    </Grid>
-                    <TextBlock Grid.Column="2" Classes="badge" Text="badge"/>
-                    <TextBlock Grid.Column="4" Classes="menu" Text="menu"/>
-                    <TextBlock Grid.Column="5" Classes="menu" Text="info"/>
-                </Grid>
+        <Grid RowDefinitions="Auto,*,Auto">
+            <Border Grid.Row="0">
+                <ItemsControl ItemsSource="{Binding Indicators}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid ColumnSpacing="20" Columns="4"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:DashboardIndicator}">
+                            <Border Classes="indicator"
+                                    BorderBrush="{Binding TrendIsGood, Converter={x:Static converters:BooleanToBrushConverter.Instance}, ConverterParameter='#f56565:#48bb78'}"
+                                    Background="{Binding TrendIsGood, Converter={x:Static converters:BooleanToBrushConverter.Instance}, ConverterParameter='#fff5f5:#ffffff'}">
+								<Grid RowDefinitions="Auto,*,Auto,Auto" ColumnDefinitions="Auto,*,Auto">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" 
+                                               Classes="indicator-title" 
+                                               VerticalAlignment="Center"
+                                               Text="{Binding Title, Converter={x:Static converters:TextCaseConverter.Instance}, ConverterParameter='upper'}" />
+                                    <Border Grid.Row="0" Grid.Column="2" Classes="indicator-icon" VerticalAlignment="Center">
+                                        <TextBlock Classes="indicator-icon"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Text="{Binding Icon}"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" 
+                                               Classes="indicator-value"
+                                               Text="{Binding Value}"/>
+                                    <StackPanel Grid.Column="0" 
+                                                Grid.ColumnSpan="2"
+                                                Grid.Row="2"
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center">
+                                        <TextBlock Classes="trend-icon" 
+                                                   Text="{Binding TrendIcon}"
+                                                   Foreground="{Binding TrendIsGood, Converter={x:Static converters:BooleanToBrushConverter.Instance}, ConverterParameter='#f56565:#48bb78'}"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Classes="trend-value" 
+                                                   Text="{Binding TrendValue}"
+                                                   Foreground="{Binding TrendIsGood, Converter={x:Static converters:BooleanToBrushConverter.Instance}, ConverterParameter='#f56565:#48bb78'}"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Classes="trend-description" 
+                                                   Text="{Binding TrendDescription}"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Border Classes="threshold"
+                                            Grid.Column="0" 
+                                            Grid.ColumnSpan="2"
+                                            Grid.Row="3">
+                                        <StackPanel Orientation="Horizontal"
+                                                    VerticalAlignment="Center">
+                                            <TextBlock Classes="threshold-title" 
+                                                       Text="{Binding ThresholdTitle}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Classes="threshold-icon" 
+                                                       Text="{Binding ThresholdIcon}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Classes="threshold-value" 
+                                                       Text="{Binding ThresholdValue}"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Border>
-            <Border Grid.Row="1" Classes="card">
-                <TextBlock Text="Indicators"/>
-            </Border>
-            <Border Grid.Row="2" Classes="card">
+            <Border Grid.Row="1" Classes="">
                 <TextBlock Text="Bar"/>
             </Border>
-            <Border Grid.Row="3" Classes="card">
+            <Border Grid.Row="2" Classes="">
                 <TextBlock Text="Alerts"/>
             </Border>
         </Grid>

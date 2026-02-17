@@ -18,10 +18,7 @@
 
 	<Application.Styles>
 		<FluentTheme />
-        <Style Selector="Border.container">
-            <Setter Property="Background" Value="{StaticResource WindowGradient}"/>
-        </Style>
-		<Style Selector="Border.card">
+        <Style Selector="Border.card">
 			<Setter Property="Background" Value="#faffffff"/>
 			<Setter Property="CornerRadius" Value="32"/>
 			<Setter Property="BoxShadow" Value="0 20 40 #1a000000"/>

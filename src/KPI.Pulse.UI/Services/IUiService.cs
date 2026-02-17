@@ -9,4 +9,5 @@ public interface IUiService
     IEnumerable<PlatformItem> GetPlatforms();
     IEnumerable<NavItem> GetNavItems(IScreen hostScreen);
     IEnumerable<TechItem> GetTechItems();
+    IEnumerable<DashboardIndicator> GetDashboardIndicators();
 }
