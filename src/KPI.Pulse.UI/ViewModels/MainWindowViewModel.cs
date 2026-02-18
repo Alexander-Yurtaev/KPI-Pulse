@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 
 namespace KPI.Pulse.UI.ViewModels
 {
@@ -55,9 +57,24 @@ namespace KPI.Pulse.UI.ViewModels
                     }
                 });
 
-            NavigateToNavItem.RegisterHandler(interaction =>
+            NavigateToNavItem.RegisterHandler(async interaction =>
             {
-                SelectedNavItem = _navItems.FirstOrDefault(i => i.Id == interaction.Input);
+                var navItem = _navItems.FirstOrDefault(i => i.Id == interaction.Input);
+
+                if (navItem?.IsActive == true)
+                {
+                    SelectedNavItem = navItem;
+                }
+                else
+                {
+                    var box = MessageBoxManager
+                        .GetMessageBoxStandard("Заголовок", "Привет, мир!", ButtonEnum.Ok, Icon.Info);
+
+                    await box.ShowAsync();
+
+                    SelectedNavItem = null;
+                }
+
                 interaction.SetOutput(Unit.Default);
             });
 

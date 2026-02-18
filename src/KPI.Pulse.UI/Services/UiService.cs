@@ -17,9 +17,9 @@ namespace KPI.Pulse.UI.Services
 
         public IEnumerable<NavItem> GetNavItems(IScreen hostScreen)
         {
-            yield return new NavItem(1, "📊", "Дашборд", "Главный экран с KPI-карточками и графиками", () => hostScreen.Router.Navigate.Execute(new DashboardViewModel(hostScreen)));
-            yield return new NavItem(2, "📈", "Аналитика", "Детальный просмотр данных и история изменений", () => hostScreen.Router.Navigate.Execute(new AnalyticsViewModel(hostScreen)));
-            yield return new NavItem(3, "⚙️", "Настройки", "Конфигурация мониторов и пороговых значений", () => hostScreen.Router.Navigate.Execute(new SettingsViewModel(hostScreen)));
+            yield return new NavItem(1, "📊", "Дашборд", "Главный экран с KPI-карточками и графиками", true, () => hostScreen.Router.Navigate.Execute(new DashboardViewModel(hostScreen)));
+            yield return new NavItem(2, "📈", "Аналитика", "Детальный просмотр данных и история изменений", false, () => hostScreen.Router.Navigate.Execute(new AnalyticsViewModel(hostScreen)));
+            yield return new NavItem(3, "⚙️", "Настройки", "Конфигурация мониторов и пороговых значений", true, () => hostScreen.Router.Navigate.Execute(new SettingsViewModel(hostScreen)));
         }
 
         public IEnumerable<TechItem> GetTechItems()
