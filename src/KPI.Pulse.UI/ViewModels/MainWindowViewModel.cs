@@ -3,7 +3,6 @@ using KPI.Pulse.UI.Services;
 using ReactiveUI;
 using Splat;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -14,20 +13,19 @@ namespace KPI.Pulse.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, IScreen, IInteractionViewModel
     {
-        private readonly ObservableCollection<NavItem> _navItems;
-        private NavItem? _selectedNavItem;
-        private bool _headIsVisible;
-
-        public IEnumerable<NavItem> NavItems => _navItems;
         public RoutingState Router { get; } = new RoutingState();
         public Interaction<int, Unit> NavigateToNavItem { get; } = new();
 
+        public ObservableCollection<NavItem> NavItems { get; }
+
+        private NavItem? _selectedNavItem;
         public NavItem? SelectedNavItem
         {
             get => _selectedNavItem;
             set => this.RaiseAndSetIfChanged(ref _selectedNavItem, value);
         }
 
+        private bool _headIsVisible;
         public bool HeadIsVisible
         {
             get => _headIsVisible;
@@ -40,7 +38,7 @@ namespace KPI.Pulse.UI.ViewModels
         {
             var uiService = Locator.Current.GetService<IUiService>() ??
                             throw new InvalidOperationException(nameof(IUiService));
-            _navItems = new ObservableCollection<NavItem>(uiService.GetNavItems(this));
+            NavItems = new ObservableCollection<NavItem>(uiService.GetNavItems(this));
 
             this.WhenAnyValue(x => x.SelectedNavItem)
                 .Subscribe(selectedItem =>
@@ -59,7 +57,7 @@ namespace KPI.Pulse.UI.ViewModels
 
             NavigateToNavItem.RegisterHandler(async interaction =>
             {
-                var navItem = _navItems.FirstOrDefault(i => i.Id == interaction.Input);
+                var navItem = NavItems.FirstOrDefault(i => i.Id == interaction.Input);
 
                 if (navItem?.IsActive == true)
                 {
@@ -68,8 +66,8 @@ namespace KPI.Pulse.UI.ViewModels
                 else
                 {
                     var box = MessageBoxManager
-                        .GetMessageBoxStandard("Заголовок", "Привет, мир!", ButtonEnum.Ok, Icon.Info);
-                    await box.ShowAsync();
+                        .GetMessageBoxStandard("Внимание", "Раздел в разработке!", ButtonEnum.Ok, Icon.Info);
+                    await box.ShowWindowAsync();
 
                     SelectedNavItem = null;
                 }

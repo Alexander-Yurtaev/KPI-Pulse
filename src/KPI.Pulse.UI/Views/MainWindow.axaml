@@ -59,6 +59,7 @@
             <Setter Property="Spacing" Value="20"/>
         </Style>
         <Style Selector="RadioButton.nav-link">
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="Foreground" Value="#4a5568"/>
             <Setter Property="Padding" Value="12,8"/>
