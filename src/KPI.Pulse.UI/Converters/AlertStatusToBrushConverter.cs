@@ -41,15 +41,15 @@ namespace KPI.Pulse.UI.Converters
                         return new SolidColorBrush(Colors.Gray); // Возвращаем серый
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new SolidColorBrush(Colors.Gray); // Возвращаем серый при ошибке
             }
         }
 
-        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
         }
     }
 }

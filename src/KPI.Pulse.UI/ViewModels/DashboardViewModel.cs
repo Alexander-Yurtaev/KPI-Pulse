@@ -27,11 +27,6 @@ namespace KPI.Pulse.UI.ViewModels
 
         public DashboardViewModel()
         {
-        }
-
-        public DashboardViewModel(IScreen screen) : this()
-        {
-            HostScreen = screen;
             Chart = new ChartViewModel();
 
             var uiService = Locator.Current.GetService<IUiService>() ??
@@ -40,6 +35,11 @@ namespace KPI.Pulse.UI.ViewModels
             _indicators = new ObservableCollection<DashboardIndicator>(uiService.GetDashboardIndicators());
             _alerts = new ObservableCollection<Alert>(uiService.GetAlerts());
             _goals = new ObservableCollection<Goal>(uiService.GetGoals());
+        }
+
+        public DashboardViewModel(IScreen screen) : this()
+        {
+            HostScreen = screen;
         }
     }
 }
