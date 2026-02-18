@@ -1,6 +1,7 @@
 ﻿using KPI.Pulse.UI.Models;
 using KPI.Pulse.UI.ViewModels;
 using System.Collections.Generic;
+using KPI.Pulse.UI.Models.Enums;
 using ReactiveUI;
 
 namespace KPI.Pulse.UI.Services
@@ -32,20 +33,26 @@ namespace KPI.Pulse.UI.Services
         public IEnumerable<DashboardIndicator> GetDashboardIndicators()
         {
             yield return new DashboardIndicator("Выручка", "💰", "2.4M ₽", 
-                true, "▲", "+12.5 %", "к прошлому периоду",
+                TrendStatus.Success, "▲", "+12.5 %", "к прошлому периоду",
                 "Порог:", "▼", "1.5M ₽");
 
             yield return new DashboardIndicator("Прибыль", "📈", "845K ₽",
-                false, "▼", "-3.2 %", "к прошлому периоду",
+                TrendStatus.Danger, "▼", "-3.2 %", "к прошлому периоду",
                 "", "⚠️", "Ниже порога(1M ₽)");
 
             yield return new DashboardIndicator("Клиенты", "👥", "1,284",
-                true, "▲", "+8.3 %", "новых",
+                TrendStatus.Success, "▲", "+8.3 %", "новых",
                 "Цель:", "", "1500");
 
             yield return new DashboardIndicator("Конверсия", "🔄", "15.8 %",
-                true, "▲", "+1.2 %", "к прошлому",
+                TrendStatus.Warning, "▲", "+1.2 %", "к прошлому",
                 "Целевой диапазон:", "⚡", "14 - 18%");
+        }
+
+        public IEnumerable<Alert> GetAlerts()
+        {
+            yield return new Alert("⚠️", "Прибыль ниже порога", AlertStatus.Danger,"Текущее значение: 845K ₽ (порог: 1M ₽)");
+            yield return new Alert("⚡", "Конверсия приближается к верхней границе", AlertStatus.Warning, "15.8% (диапазон: 14-18%)");
         }
     }
 }

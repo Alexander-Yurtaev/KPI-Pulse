@@ -36,17 +36,20 @@ namespace KPI.Pulse.UI.ViewModels
                 new ColumnSeries<double>
                 {
                     Name = "Выручка",
-                    Values = Enumerable.Range(1, 7).Select(_ => random.NextDouble()).ToArray()
+                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                    Fill = new SolidColorPaint(new SKColor(0x66, 0x7e, 0xea)) //#667eea
                 },
                 new ColumnSeries<double>
                 {
                     Name = "Прибыль",
-                    Values = Enumerable.Range(1, 7).Select(_ => random.NextDouble()).ToArray()
+                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                    Fill = new SolidColorPaint(new SKColor(0x48, 0xbb, 0x78)) //#48bb78
                 },
                 new ColumnSeries<double>
                 {
                     Name = "Клиенты",
-                    Values = Enumerable.Range(1, 7).Select(_ => random.NextDouble()).ToArray()
+                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                    Fill = new SolidColorPaint(new SKColor(0xf6, 0xad, 0x55)) //#f6ad55
                 }
             };
 

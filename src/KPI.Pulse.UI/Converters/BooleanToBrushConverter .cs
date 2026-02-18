@@ -11,8 +11,6 @@ namespace KPI.Pulse.UI.Converters
 
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            System.Diagnostics.Debug.WriteLine($"BooleanToBrushConverter: value={value}, parameter={parameter}");
-
             var parts = parameter?.ToString()?.Split(':');
             if (parts is null || parts.Length != 2)
             {
@@ -32,13 +30,11 @@ namespace KPI.Pulse.UI.Converters
                 var trueBrush = new SolidColorBrush(trueColorUint);
 
                 var brush = (bool)(value ?? false) ? trueBrush : falseBrush;
-                System.Diagnostics.Debug.WriteLine($"Returning brush with color: {brush.Color}");
 
                 return brush;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in converter: {ex.Message}");
                 return new SolidColorBrush(Colors.Gray); // Возвращаем серый при ошибке
             }
         }

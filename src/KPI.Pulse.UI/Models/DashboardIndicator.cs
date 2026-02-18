@@ -1,15 +1,17 @@
-﻿namespace KPI.Pulse.UI.Models
+﻿using KPI.Pulse.UI.Models.Enums;
+
+namespace KPI.Pulse.UI.Models
 {
     public class DashboardIndicator
     {
-        public DashboardIndicator(string title, string icon, string value, 
-            bool trendIsGood, string trendIcon, string trendValue, string trendDescription, string thresholdTitle, 
+        public DashboardIndicator(string title, string icon, string value,
+            TrendStatus trendStatus, string trendIcon, string trendValue, string trendDescription, string thresholdTitle, 
             string thresholdIcon, string thresholdValue)
         {
             Title = title;
             Icon = icon;
             Value = value;
-            TrendIsGood = trendIsGood;
+            TrendStatus = trendStatus;
             TrendIcon = trendIcon;
             TrendValue = trendValue;
             TrendDescription = trendDescription;
@@ -21,7 +23,7 @@
         public string Title { get; init; }
         public string Icon { get; init; }
         public string Value { get; init; }
-        public bool TrendIsGood { get; init; }
+        public TrendStatus TrendStatus { get; init; }
         public string TrendIcon { get; init; }
         public string TrendValue { get; init; }
         public string TrendDescription { get; init; }

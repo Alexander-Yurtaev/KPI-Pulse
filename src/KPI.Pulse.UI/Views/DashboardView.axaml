@@ -1,224 +1,335 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="using:KPI.Pulse.UI.ViewModels"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
-             xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
-             xmlns:converters="clr-namespace:KPI.Pulse.UI.Converters"
-             xmlns:skiaSharpView="clr-namespace:LiveChartsCore.SkiaSharpView;assembly=LiveChartsCore.SkiaSharpView"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="KPI.Pulse.UI.Views.DashboardView"
-             x:DataType="vm:DashboardViewModel"
-             x:CompileBindings="True">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:vm="using:KPI.Pulse.UI.ViewModels"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+			 xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
+			 xmlns:converters="clr-namespace:KPI.Pulse.UI.Converters"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="KPI.Pulse.UI.Views.DashboardView"
+			 x:DataType="vm:DashboardViewModel"
+			 x:CompileBindings="True">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:DashboardViewModel/>
-    </Design.DataContext>
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+		to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:DashboardViewModel/>
+	</Design.DataContext>
 
-    <UserControl.Styles>
-        <Style Selector="Border.container">
-            <Setter Property="Background" Value="#f0f2f5"/>
+	<UserControl.Styles>
+		<Style Selector="Border.container">
+			<Setter Property="Background" Value="#f0f2f5"/>
+		</Style>
+		<Style Selector="Border.indicators-container">
+			<Setter Property="Margin" Value="0,0,0,24"/>
+		</Style>
+		<Style Selector="Border.indicator">
+			<Setter Property="BorderThickness" Value="4,0,0,0"/>
+			<Setter Property="CornerRadius" Value="20"/>
+			<Setter Property="Padding" Value="24"/>
+			<Setter Property="BoxShadow" Value="0 4 12 0 #0D000000"/>
+		</Style>
+		<Style Selector="TextBlock.indicator-title">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="FontWeight" Value="500"/>
+			<Setter Property="Foreground" Value="#718096"/>
+			<Setter Property="LetterSpacing" Value="0.5"/>
+		</Style>
+		<Style Selector="Border.indicator-icon">
+			<Setter Property="Width" Value="40"/>
+			<Setter Property="Height" Value="40"/>
+			<Setter Property="Background" Value="#f7fafc"/>
+			<Setter Property="CornerRadius" Value="12"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+		</Style>
+		<Style Selector="TextBlock.indicator-icon">
+			<Setter Property="FontSize" Value="20"/>
+		</Style>
+		<Style Selector="TextBlock.indicator-value">
+			<Setter Property="FontSize" Value="32"/>
+			<Setter Property="FontWeight" Value="700"/>
+			<Setter Property="Margin" Value="0,0,0,8"/>
+		</Style>
+		<Style Selector="TextBlock.trend-icon">
+			<Setter Property="FontSize" Value="14"/>
+		</Style>
+		<Style Selector="TextBlock.trend-value">
+			<Setter Property="Margin" Value="8"/>
+			<Setter Property="FontSize" Value="14"/>
+		</Style>
+		<Style Selector="TextBlock.trend-description">
+			<Setter Property="Margin" Value="8"/>
+			<Setter Property="FontSize" Value="14"/>
+		</Style>
+		<Style Selector="Border.threshold">
+			<Setter Property="Margin" Value="0,12,0,0"/>
+			<Setter Property="Padding" Value="0,12,0,0"/>
+			<Setter Property="BorderThickness" Value="0,1,0,0"/>
+			<Setter Property="BorderBrush" Value="#e2e8f0"/>
+		</Style>
+		<Style Selector="TextBlock.threshold-title">
+			<Setter Property="FontSize" Value="13"/>
+			<Setter Property="Foreground" Value="#718096"/>
+		</Style>
+		<Style Selector="TextBlock.threshold-icon">
+			<Setter Property="FontSize" Value="13"/>
+		</Style>
+		<Style Selector="TextBlock.threshold-value">
+			<Setter Property="FontSize" Value="13"/>
+			<Setter Property="Foreground" Value="#718096"/>
+		</Style>
+		<Style Selector="Border.chart-container">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="CornerRadius" Value="20"/>
+			<Setter Property="Padding" Value="24"/>
+			<Setter Property="Margin" Value="0,0,0,24"/>
+			<Setter Property="BoxShadow" Value="0 4 12 0 #0D000000"/>
+		</Style>
+		<Style Selector="Grid.chart-header">
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Margin" Value="0,0,0,20"/>
+		</Style>
+		<Style Selector="TextBlock.chart-header-icon">
+			<Setter Property="VerticalAlignment" Value="Center"/>
+		</Style>
+		<Style Selector="TextBlock.chart-header-title">
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="FontWeight" Value="600"/>
+		</Style>
+		<Style Selector="Grid.chart-legend-container">
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="ColumnSpan" Value="6"/>
+		</Style>
+		<Style Selector="TextBlock.chart-legend">
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="FontSize" Value="8"/>
+		</Style>
+		<Style Selector="Border.chart-legend-icon">
+			<Setter Property="Width" Value="8"/>
+			<Setter Property="Height" Value="8"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="CornerRadius" Value="4"/>
+		</Style>
+		<Style Selector="Border.blue">
+			<Setter Property="Background" Value="#667eea"/>
+		</Style>
+		<Style Selector="Border.green">
+			<Setter Property="Background" Value="#48bb78"/>
+		</Style>
+		<Style Selector="Border.orange">
+			<Setter Property="Background" Value="#f6ad55"/>
+		</Style>
+		<Style Selector="TextBlock.chart-legend.title">
+			<Setter Property="Foreground" Value="#718096"/>
+			<Setter Property="FontSize" Value="13"/>
+		</Style>
+		<Style Selector="Border.bottom-panel">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="CornerRadius" Value="20"/>
+			<Setter Property="Padding" Value="20"/>
+			<Setter Property="BoxShadow" Value="0 4 12 0 #0D000000"/>
+		</Style>
+		<Style Selector="StackPanel.bottom-panel-title">
+			<Setter Property="Margin" Value="0,0,0,16"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Spacing" Value="8"/>
+		</Style>
+		<Style Selector="TextBlock.bottom-panel-title">
+			<Setter Property="FontWeight" Value="600"/>
+		</Style>
+		<Style Selector="Border.bottom-panel-counter">
+			<Setter Property="Background" Value="#f56565"/>
+			<Setter Property="Padding" Value="8,2"/>
+			<Setter Property="CornerRadius" Value="12"/>
+		</Style>
+		<Style Selector="TextBlock.bottom-panel-counter-value">
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontSize" Value="12"/>
+		</Style>
+		<Style Selector="Border.alert-item">
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Padding" Value="12"/>
+			<Setter Property="CornerRadius" Value="12"/>
+			<Setter Property="Margin" Value="0,0,0,8"/>
+			<Setter Property="BorderThickness" Value="3,0,0,0"/>
         </Style>
-        <Style Selector="Border.indicators-container">
-            <Setter Property="Margin" Value="0,0,0,24"/>
-        </Style>
-        <Style Selector="Border.indicator">
-            <Setter Property="BorderThickness" Value="4,0,0,0"/>
-            <Setter Property="CornerRadius" Value="20"/>
-            <Setter Property="Padding" Value="24"/>
-            <Setter Property="BoxShadow" Value="0 4 12 0 #0D000000"/>
-        </Style>
-        <Style Selector="TextBlock.indicator-title">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="500"/>
-            <Setter Property="Foreground" Value="#718096"/>
-            <Setter Property="LetterSpacing" Value="0.5"/>
-        </Style>
-        <Style Selector="Border.indicator-icon">
-            <Setter Property="Width" Value="40"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="#f7fafc"/>
-            <Setter Property="CornerRadius" Value="12"/>
+		<Style Selector="TextBlock.alert-icon">
+            <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-        <Style Selector="TextBlock.indicator-icon">
-            <Setter Property="FontSize" Value="20"/>
+        <Style Selector="TextBlock.alert-title">
+            <Setter Property="FontWeight" Value="500"/>
         </Style>
-        <Style Selector="TextBlock.indicator-value">
-            <Setter Property="FontSize" Value="32"/>
-            <Setter Property="FontWeight" Value="700"/>
-            <Setter Property="Margin" Value="0,0,0,8"/>
-        </Style>
-        <Style Selector="TextBlock.trend-icon">
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-        <Style Selector="TextBlock.trend-value">
-            <Setter Property="Margin" Value="8"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-        <Style Selector="TextBlock.trend-description">
-            <Setter Property="Margin" Value="8"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-        <Style Selector="Border.threshold">
-            <Setter Property="Margin" Value="0,12,0,0"/>
-            <Setter Property="Padding" Value="0,12,0,0"/>
-            <Setter Property="BorderThickness" Value="0,1,0,0"/>
-            <Setter Property="BorderBrush" Value="#e2e8f0"/>
-        </Style> 
-        <Style Selector="TextBlock.threshold-title">
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Foreground" Value="#718096"/>
-        </Style> 
-        <Style Selector="TextBlock.threshold-icon">
-            <Setter Property="FontSize" Value="13"/>
-        </Style> 
-        <Style Selector="TextBlock.threshold-value">
-            <Setter Property="FontSize" Value="13"/>
+        <Style Selector="TextBlock.alert-description">
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="Foreground" Value="#718096"/>
         </Style>
-        <Style Selector="Border.chart-container">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="CornerRadius" Value="20"/>
-            <Setter Property="Padding" Value="24"/>
-            <Setter Property="Margin" Value="0,0,0,24"/>
-            <Setter Property="BoxShadow" Value="0 4 12 0 #0D000000"/>
-        </Style>
-        <Style Selector="Grid.chart-header">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,0,0,20"/>
-        </Style>
-        <Style Selector="TextBlock.chart-header-icon">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-        <Style Selector="TextBlock.chart-header-title">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="600"/>
-        </Style>
-        <Style Selector="Grid.chart-legend-container">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="ColumnSpan" Value="6"/>
-        </Style>
-        <Style Selector="TextBlock.chart-legend">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="8"/>
-        </Style>
-        <Style Selector="TextBlock.chart-legend.title">
-            <Setter Property="Foreground" Value="#718096"/>
-            <Setter Property="FontSize" Value="13"/>
-        </Style>
-    </UserControl.Styles>
+	</UserControl.Styles>
 
-    <Border Classes="container" Padding="20,40">
-        <Grid RowDefinitions="Auto,*,Auto">
-            <Border Grid.Row="0" Classes="indicators-container">
-                <ItemsControl ItemsSource="{Binding Indicators}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid ColumnSpacing="20" Columns="4"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type models:DashboardIndicator}">
-                            <Border Classes="indicator"
-                                    BorderBrush="{Binding TrendIsGood, Converter={x:Static converters:BooleanToBrushConverter.Instance}, ConverterParameter='#f56565:#48bb78'}"
-                                    Background="{Binding TrendIsGood, Converter={x:Static converters:BooleanToBrushConverter.Instance}, ConverterParameter='#fff5f5:#ffffff'}">
+	<Border Classes="container" Padding="20,40">
+		<Grid RowDefinitions="Auto,*,Auto">
+			<Border Grid.Row="0" Classes="indicators-container">
+				<ItemsControl ItemsSource="{Binding Indicators}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<UniformGrid ColumnSpacing="20" Columns="4"/>
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate DataType="{x:Type models:DashboardIndicator}">
+							<Border Classes="indicator"
+									BorderBrush="{Binding TrendStatus, Converter={x:Static converters:TrendStatusToBrushConverter.Instance}, ConverterParameter='#48bb78:#f6ad55:#f56565'}"
+									Background="{Binding TrendStatus, Converter={x:Static converters:TrendStatusToBrushConverter.Instance}, ConverterParameter='#ffffff:#fffaf0:#fff5f5'}">
 								<Grid RowDefinitions="Auto,*,Auto,Auto" ColumnDefinitions="Auto,*,Auto">
-                                    <TextBlock Grid.Row="0" Grid.Column="0" 
-                                               Classes="indicator-title" 
-                                               VerticalAlignment="Center"
-                                               Text="{Binding Title, Converter={x:Static converters:TextCaseConverter.Instance}, ConverterParameter='upper'}" />
-                                    <Border Grid.Row="0" Grid.Column="2" Classes="indicator-icon" VerticalAlignment="Center">
-                                        <TextBlock Classes="indicator-icon"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center"
-                                                   Text="{Binding Icon}"/>
-                                    </Border>
-                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" 
-                                               Classes="indicator-value"
-                                               Text="{Binding Value}"/>
-                                    <StackPanel Grid.Column="0" 
-                                                Grid.ColumnSpan="2"
-                                                Grid.Row="2"
-                                                Orientation="Horizontal"
-                                                VerticalAlignment="Center">
-                                        <TextBlock Classes="trend-icon" 
-                                                   Text="{Binding TrendIcon}"
-                                                   Foreground="{Binding TrendIsGood, Converter={x:Static converters:BooleanToBrushConverter.Instance}, ConverterParameter='#f56565:#48bb78'}"
-                                                   VerticalAlignment="Center"/>
-                                        <TextBlock Classes="trend-value" 
-                                                   Text="{Binding TrendValue}"
-                                                   Foreground="{Binding TrendIsGood, Converter={x:Static converters:BooleanToBrushConverter.Instance}, ConverterParameter='#f56565:#48bb78'}"
-                                                   VerticalAlignment="Center"/>
-                                        <TextBlock Classes="trend-description" 
-                                                   Text="{Binding TrendDescription}"
-                                                   VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <Border Classes="threshold"
-                                            Grid.Column="0" 
-                                            Grid.ColumnSpan="2"
-                                            Grid.Row="3">
-                                        <StackPanel Orientation="Horizontal"
-                                                    VerticalAlignment="Center">
-                                            <TextBlock Classes="threshold-title" 
-                                                       Text="{Binding ThresholdTitle}"
-                                                       VerticalAlignment="Center"/>
-                                            <TextBlock Classes="threshold-icon" 
-                                                       Text="{Binding ThresholdIcon}"
-                                                       VerticalAlignment="Center"/>
-                                            <TextBlock Classes="threshold-value" 
-                                                       Text="{Binding ThresholdValue}"
-                                                       VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Border>
-            <Border Grid.Row="1" Classes="chart-container">
-                <Grid RowDefinitions="Auto,*">
-                    <Grid Grid.Row="0"
-                          Classes="chart-header"
-                          ColumnDefinitions="Auto,*,Auto">
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <TextBlock Classes="chart-header-icon" Text="📈"/>
-                            <TextBlock Classes="chart-header-title" Text="Динамика ключевых показателей"/>
-                        </StackPanel>
-                        <!--<StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="20">
-                            <Grid ColumnDefinitions="Auto,*" 
-                                  Classes="chart-legend-container">
-                                <TextBlock Classes="chart-legend" Grid.Column="0" Text="🔵"/>
-                                <TextBlock Classes="chart-legend title" Grid.Column="1" Text="Выручка"/>
-                            </Grid>
+									<TextBlock Grid.Row="0" Grid.Column="0"
+											   Classes="indicator-title"
+											   VerticalAlignment="Center"
+											   Text="{Binding Title, Converter={x:Static converters:TextCaseConverter.Instance}, ConverterParameter='upper'}" />
+									<Border Grid.Row="0" Grid.Column="2" Classes="indicator-icon" VerticalAlignment="Center">
+										<TextBlock Classes="indicator-icon"
+												   VerticalAlignment="Center"
+												   HorizontalAlignment="Center"
+												   Text="{Binding Icon}"/>
+									</Border>
+									<TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
+											   Classes="indicator-value"
+											   Text="{Binding Value}"/>
+									<StackPanel Grid.Column="0"
+												Grid.ColumnSpan="2"
+												Grid.Row="2"
+												Orientation="Horizontal"
+												VerticalAlignment="Center">
+										<TextBlock Classes="trend-icon"
+												   Text="{Binding TrendIcon}"
+												   Foreground="{Binding TrendStatus, Converter={x:Static converters:TrendStatusToBrushConverter.Instance}, ConverterParameter='#48bb78:#f6ad55:#f56565'}"
+												   VerticalAlignment="Center"/>
+										<TextBlock Classes="trend-value"
+												   Text="{Binding TrendValue}"
+												   Foreground="{Binding TrendStatus, Converter={x:Static converters:TrendStatusToBrushConverter.Instance}, ConverterParameter='#48bb78:#f6ad55:#f56565'}"
+												   VerticalAlignment="Center"/>
+										<TextBlock Classes="trend-description"
+												   Text="{Binding TrendDescription}"
+												   VerticalAlignment="Center"/>
+									</StackPanel>
+									<Border Classes="threshold"
+											Grid.Column="0"
+											Grid.ColumnSpan="2"
+											Grid.Row="3">
+										<StackPanel Orientation="Horizontal"
+													VerticalAlignment="Center">
+											<TextBlock Classes="threshold-title"
+													   Text="{Binding ThresholdTitle}"
+													   VerticalAlignment="Center"/>
+											<TextBlock Classes="threshold-icon"
+													   Text="{Binding ThresholdIcon}"
+													   VerticalAlignment="Center"/>
+											<TextBlock Classes="threshold-value"
+													   Text="{Binding ThresholdValue}"
+													   VerticalAlignment="Center"/>
+										</StackPanel>
+									</Border>
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Border>
+			<Border Grid.Row="1" Classes="chart-container">
+				<Grid RowDefinitions="Auto,*">
+					<Grid Grid.Row="0"
+						  Classes="chart-header"
+						  ColumnDefinitions="Auto,*,Auto">
+						<StackPanel Grid.Column="0" Orientation="Horizontal">
+							<TextBlock Classes="chart-header-icon" Text="📈"/>
+							<TextBlock Classes="chart-header-title" Text="Динамика ключевых показателей"/>
+						</StackPanel>
+						<StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="20">
+							<Grid ColumnDefinitions="Auto,*"
+								  Classes="chart-legend-container"
+								  ColumnSpacing="6">
+								<Border Classes="chart-legend-icon blue"/>
+								<TextBlock Classes="chart-legend title" Grid.Column="1" Text="Выручка"/>
+							</Grid>
 
-                            <Grid ColumnDefinitions="Auto,*" Classes="chart-legend-container">
-                                <TextBlock Classes="chart-legend" Grid.Column="0" Text="🟢"/>
-                                <TextBlock Classes="chart-legend title" Grid.Column="1" Text="Прибыль"/>
-                            </Grid>
+							<Grid ColumnDefinitions="Auto,*"
+								  Classes="chart-legend-container"
+								  ColumnSpacing="6">
+								<Border Classes="chart-legend-icon green"/>
+								<TextBlock Classes="chart-legend title" Grid.Column="1" Text="Прибыль"/>
+							</Grid>
 
-                            <Grid ColumnDefinitions="Auto,*" Classes="chart-legend-container">
-                                <TextBlock Classes="chart-legend" Grid.Column="0" Text="🟠"/>
-                                <TextBlock Classes="chart-legend title" Grid.Column="1" Text="Клиенты"/>
-                            </Grid>
-                        </StackPanel>-->
-                    </Grid>
-                    <lvc:CartesianChart
-                        Grid.Row="1"
-                        Series="{Binding Chart.Series}"
-                        XAxes="{Binding Chart.XAxes}"
-                        LegendPosition="Top">
-                    </lvc:CartesianChart>
-                </Grid>
-            </Border>
-            <Border Grid.Row="2" Classes="">
-                <TextBlock Text="Alerts"/>
-            </Border>
-        </Grid>
-    </Border>
+							<Grid ColumnDefinitions="Auto,*"
+								  Classes="chart-legend-container"
+								  ColumnSpacing="6">
+								<Border Classes="chart-legend-icon orange"/>
+								<TextBlock Classes="chart-legend title" Grid.Column="1" Text="Клиенты"/>
+							</Grid>
+						</StackPanel>
+					</Grid>
+					<lvc:CartesianChart
+					Grid.Row="1"
+					Series="{Binding Chart.Series}"
+					XAxes="{Binding Chart.XAxes}"
+					LegendPosition="Hidden">
+					</lvc:CartesianChart>
+				</Grid>
+			</Border>
+			<Border Grid.Row="2" Classes="container">
+				<Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+					<Border Grid.Column="0" Classes="bottom-panel">
+						<Grid RowDefinitions="Auto,*">
+							<StackPanel Grid.Row="0" Classes="bottom-panel-title" Orientation="Horizontal">
+								<TextBlock Text="⚠️" Classes="bottom-panel-title"/>
+								<TextBlock Text="Алерты" Classes="bottom-panel-title"/>
+								<Border Classes="bottom-panel-counter">
+									<TextBlock Classes="bottom-panel-counter-value"
+											   Text="{Binding AlertsCount}"/>
+								</Border>
+							</StackPanel>
+							<ScrollViewer Grid.Row="1"
+										  HorizontalScrollBarVisibility="Disabled"
+										  VerticalScrollBarVisibility="Auto">
+								<ItemsControl ItemsSource="{Binding Alerts}">
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<StackPanel />
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>
+									<ItemsControl.ItemTemplate>
+										<DataTemplate DataType="models:Alert">
+                                            <Border Classes="alert-item"
+                                                    HorizontalAlignment="Stretch"
+                                                    BorderBrush="{Binding AlertStatus, Converter={x:Static converters:AlertStatusToBrushConverter.Instance}, ConverterParameter='#f6ad55:#f56565'}"
+                                                    Background="{Binding AlertStatus, Converter={x:Static converters:AlertStatusToBrushConverter.Instance}, ConverterParameter='#fffaf0:#fff5f5'}">
+                                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                                    <TextBlock Grid.Column="0"
+                                                               Classes="alert-icon"
+                                                               Text="{Binding Icon}"/>
+                                                    <Grid Grid.Column="1"
+                                                          RowDefinitions="*,*">
+                                                        <TextBlock Grid.Row="0"
+                                                                   Classes="alert-title"
+                                                                   Text="{Binding Title}"/>
+                                                        <TextBlock Grid.Row="1"
+                                                                   Classes="alert-description"
+                                                                   Text="{Binding Description}"/>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+							</ScrollViewer>
+						</Grid>
+					</Border>
+					<Border Grid.Column="1" Classes="bottom-panel">
+						<TextBlock Text="Цели"/>
+					</Border>
+				</Grid>
+			</Border>
+		</Grid>
+	</Border>
 </UserControl>
