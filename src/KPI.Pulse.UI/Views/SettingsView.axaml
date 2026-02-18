@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:KPI.Pulse.UI.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,5 +8,53 @@
              x:Class="KPI.Pulse.UI.Views.SettingsView"
              x:DataType="vm:SettingsViewModel"
              x:CompileBindings="True">
-    Welcome to Settings!
+
+    <UserControl.Styles>
+        <Style Selector="Border.app">
+            <Setter Property="Background" Value="#f0f2f5"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
+        <Style Selector="Grid.app">
+        </Style>
+        <Style Selector="Border.breadcrumb">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+        <Style Selector="TextBlock.breadcrumb-link">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#667eea"/>
+        </Style>
+        <Style Selector="TextBlock.breadcrumb-text">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#718096"/>
+        </Style>
+        <Style Selector="Border.settings-container">
+
+        </Style>
+    </UserControl.Styles>
+
+    <Border Classes="app">
+        <Grid RowDefinitions="Auto,*" Classes="app">
+            <Border Grid.Row="0" Classes="breadcrumb">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Command="{Binding NavigateToNavItemCommand}">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Classes="breadcrumb-link" Text="{Binding RootNavItem.Title}"/>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <TextBlock Classes="breadcrumb-text" Text=">"/>
+                    <TextBlock Classes="breadcrumb-text" Text="Настройки"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Classes="settings-container">
+
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>
