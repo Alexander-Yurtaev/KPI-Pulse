@@ -1,60 +1,320 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="using:KPI.Pulse.UI.ViewModels"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="KPI.Pulse.UI.Views.SettingsView"
-             x:DataType="vm:SettingsViewModel"
-             x:CompileBindings="True">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:vm="using:KPI.Pulse.UI.ViewModels"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
+			 mc:Ignorable="d"
+             d:DesignWidth="800"
+			 x:Class="KPI.Pulse.UI.Views.SettingsView"
+			 x:DataType="vm:SettingsViewModel"
+			 x:CompileBindings="True">
 
-    <UserControl.Styles>
-        <Style Selector="Border.app">
-            <Setter Property="Background" Value="#f0f2f5"/>
-            <Setter Property="Padding" Value="20"/>
+	<UserControl.Styles>
+		<Style Selector="Border.app">
+			<Setter Property="Background" Value="#f0f2f5"/>
+			<Setter Property="Padding" Value="20"/>
+		</Style>
+		<Style Selector="Grid.app">
+		</Style>
+		<Style Selector="Border.breadcrumb">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="CornerRadius" Value="12"/>
+			<Setter Property="Padding" Value="20,12"/>
+			<Setter Property="Margin" Value="0,0,0,20"/>
+		</Style>
+		<Style Selector="TextBlock.breadcrumb-link">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Foreground" Value="#667eea"/>
+			<Setter Property="Cursor" Value="Hand"/>
+		</Style>
+		<Style Selector="TextBlock.breadcrumb-text">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Foreground" Value="#718096"/>
+		</Style>
+		<Style Selector="Border.settings-container">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="CornerRadius" Value="24"/>
+			<Setter Property="Padding" Value="32"/>
+			<Setter Property="BoxShadow" Value="0 10 30 0 #0000001A"/>
+		</Style>
+		<Style Selector="Border.settings-header">
+			<Setter Property="Margin" Value="0,0,0,32"/>
+			<Setter Property="Padding" Value="0,0,0,16"/>
+			<Setter Property="BorderThickness" Value="0,0,0,2"/>
+			<Setter Property="BorderBrush" Value="#e2e8f0"/>
+		</Style>
+		<Style Selector="Grid.settings-header">
+			<Setter Property="ColumnSpacing" Value="12"/>
+		</Style>
+		<Style Selector="TextBlock.settings-header-icon">
+			<Setter Property="FontSize" Value="24"/>
+		</Style>
+		<Style Selector="TextBlock.settings-header-title">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="FontWeight" Value="600"/>
+		</Style>
+		<Style Selector="Grid.settings-section">
+		</Style>
+		<Style Selector="StackPanel.section-title">
+			<Setter Property="Margin" Value="0,0,0,20"/>
+			<Setter Property="Spacing" Value="8"/>
+		</Style>
+		<Style Selector="TextBlock.section-title-icon">
+			<Setter Property="FontSize" Value="16"/>
+		</Style>
+		<Style Selector="TextBlock.section-title">
+			<Setter Property="FontSize" Value="16"/>
+			<Setter Property="FontWeight" Value="600"/>
+			<Setter Property="Foreground" Value="#2d3748"/>
+		</Style>
+		<Style Selector="Grid.add-kpi-card">
+			<Setter Property="Margin" Value="0,0,0,24"/>
         </Style>
-        <Style Selector="Grid.app">
+        <Style Selector="Rectangle.add-kpi-card">
+            <Setter Property="StrokeDashArray" Value="2,2"/>
+            <Setter Property="Stroke" Value="#cbd5e0"/>
+            <Setter Property="StrokeThickness" Value="2"/>
+            <Setter Property="RadiusX" Value="16"/>
+            <Setter Property="RadiusY" Value="16"/>
+			<Setter Property="Fill" Value="Transparent"/>
         </Style>
-        <Style Selector="Border.breadcrumb">
-            <Setter Property="Background" Value="White"/>
+        <Style Selector="Border.add-kpi-card">
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Background">
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                    <GradientStop Color="#f7fafc" Offset="0"/>
+                    <GradientStop Color="#edf2f7" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter>
+        </Style>
+		<Style Selector="ComboBox.add-kpi-select">
+            <Setter Property="Margin" Value="12,16"/>
+            <Setter Property="Padding" Value="12,16"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="#e2e8f0"/>
             <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="20,12"/>
-            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Background" Value="White"/>
+		</Style>
+		<Style Selector="Button.add-kpi-btn">
+            <Setter Property="Padding" Value="24,12"/>
+            <Setter Property="Background" Value="#667eea"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+		</Style>
+		<Style Selector="StackPanel.kpi-list">
+			<Setter Property="Spacing" Value="12"/>
+			<Setter Property="Margin" Value="0,0,0,24"/>
         </Style>
-        <Style Selector="TextBlock.breadcrumb-link">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="#667eea"/>
+		<Style Selector="Border.kpi-item">
+			<Setter Property="Background" Value="#f7fafc"/>
+			<Setter Property="CornerRadius" Value="12"/>
+			<Setter Property="Padding" Value="16"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="#e2e8f0"/>
         </Style>
-        <Style Selector="TextBlock.breadcrumb-text">
-            <Setter Property="FontSize" Value="14"/>
+        <Style Selector="Grid.kpi-item">
+			<Setter Property="ColumnSpacing" Value="16"/>
+			<Setter Property="RowSpacing" Value="16"/>
+        </Style>
+		<Style Selector="TextBlock.kpi-drag">
+			<Setter Property="Foreground" Value="#a0aec0"/>
+			<Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+		<Style Selector="CheckBox.kpi-checkbox">
+			<Setter Property="Width" Value="20"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="StackPanel.kpi-info">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+		<Style Selector="TextBlock.kpi-info-icon">
+			<Setter Property="Margin" Value="0,4,4,4"/>
+        </Style>
+        <Style Selector="TextBlock.kpi-info-title">
+            <Setter Property="FontWeight" Value="600"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+        <Style Selector="TextBlock.kpi-info-description">
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="Foreground" Value="#718096"/>
         </Style>
-        <Style Selector="Border.settings-container">
-
+		<Style Selector="Border.kpi-delete-btn">
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Padding" Value="6"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="BorderBrush" Value="Transparent"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
-    </UserControl.Styles>
+        <Style Selector="TextBlock.kpi-delete-btn">
+			<Setter Property="FontSize" Value="24"/>
+        </Style>
+		<Style Selector="Border.actions-bar">
+			<Setter Property="Padding" Value="0,24,0,0"/>
+			<Setter Property="BorderThickness" Value="0,2,0,0"/>
+			<Setter Property="BorderBrush" Value="#e2e8f0"/>
+        </Style>
+        <Style Selector="Grid.actions-bar">
+			<Setter Property="ColumnSpacing" Value="16"/>
+        </Style>
+		<Style Selector="Button.btn">
+			<Setter Property="Padding" Value="28,12"/>
+			<Setter Property="CornerRadius" Value="12"/>
+			<Setter Property="FontWeight" Value="500"/>
+			<Setter Property="FontSize" Value="15"/>
+			<Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.btn-primary">
+			<Setter Property="Background" Value="#667eea"/>
+			<Setter Property="Foreground" Value="White"/>
+        </Style>
+		<Style Selector="Button.btn-secondary">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="BorderThickness" Value="2"/>
+			<Setter Property="BorderBrush" Value="#e2e8f0"/>
+        </Style>
+	</UserControl.Styles>
 
-    <Border Classes="app">
-        <Grid RowDefinitions="Auto,*" Classes="app">
-            <Border Grid.Row="0" Classes="breadcrumb">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <Button Command="{Binding NavigateToNavItemCommand}">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Classes="breadcrumb-link" Text="{Binding RootNavItem.Title}"/>
-                                </StackPanel>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                    <TextBlock Classes="breadcrumb-text" Text=">"/>
-                    <TextBlock Classes="breadcrumb-text" Text="Настройки"/>
-                </StackPanel>
-            </Border>
-            <Border Grid.Row="1" Classes="settings-container">
-
-            </Border>
-        </Grid>
-    </Border>
+	<Border Classes="app">
+		<Grid RowDefinitions="Auto,*" Classes="app">
+			<Border Grid.Row="0" Classes="breadcrumb">
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<Button Command="{Binding NavigateToNavItemCommand}" 
+                            CommandParameter="{Binding RootNavItem}">
+						<Button.Template>
+							<ControlTemplate>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Classes="breadcrumb-link" Text="{Binding RootNavItem.Title}"/>
+								</StackPanel>
+							</ControlTemplate>
+						</Button.Template>
+					</Button>
+					<TextBlock Classes="breadcrumb-text" Text=">"/>
+					<TextBlock Classes="breadcrumb-text" Text="Настройки"/>
+				</StackPanel>
+			</Border>
+			<Border Grid.Row="1" Classes="settings-container">
+				<Grid Grid.RowDefinitions="Auto,*,Auto">
+					<Border Grid.Row="0"
+							Classes="settings-header">
+						<Grid Grid.Row="0"
+							  Classes="settings-header"
+							  Grid.ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto">
+							<TextBlock Grid.Column="0"
+									   Classes="settings-header-icon"
+									   Text="⚙️"/>
+							<TextBlock Grid.Column="1"
+									   Classes="settings-header-title"
+									   Text="Настройки мониторов"/>
+						</Grid>
+					</Border>
+					<Grid Grid.Row="1"
+						  Grid.RowDefinitions="Auto,Auto,*,Auto"
+						  Classes="settings-section">
+						<StackPanel Grid.Row="0"
+									Orientation="Horizontal"
+									Classes="section-title">
+							<TextBlock Classes="section-title-icon" Text="📈"/>
+							<TextBlock Classes="section-title" Text="Управление KPI"/>
+						</StackPanel>
+						<Grid Grid.Row="1" 
+                              Classes="add-kpi-card">
+                            <Rectangle Classes="add-kpi-card"/>
+                            <Border Classes="add-kpi-card">
+                                <Grid Grid.ColumnDefinitions="*,Auto">
+                                    <ComboBox Grid.Column="0"
+                                              HorizontalAlignment="Stretch"
+                                              ItemsSource="{Binding Kpis}"
+											  SelectedItem="{Binding SelectedKpi}"
+                                              Classes="add-kpi-select">
+										<ComboBox.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type models:Kpi}">
+                                                <TextBlock Text="{Binding Title}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                        <ComboBox.SelectionBoxItemTemplate>
+											<DataTemplate DataType="{x:Type models:Kpi}">
+												<TextBlock Text="{Binding Title}"/>
+                                            </DataTemplate>
+                                        </ComboBox.SelectionBoxItemTemplate>
+                                    </ComboBox>
+                                    <Button Grid.Column="1"
+                                            Content="➕Добавить KPI"
+                                            Classes="add-kpi-btn"
+                                            Command="{Binding AddKpiCommand}"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+						<ScrollViewer Grid.Row="2">
+                            <ItemsControl ItemsSource="{Binding SavedKpiVms}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical"
+                                                    Classes="kpi-list"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type vm:KpiViewModel}">
+										<Border Classes="kpi-item">
+											<Grid Classes="kpi-item"
+                                                  ColumnDefinitions="Auto,*,Auto">
+												<TextBlock Grid.Column="0"
+                                                           Text="⋮⋮"
+														   IsVisible="False"
+                                                           Classes="kpi-drag"/>
+												<Grid Grid.Column="1">
+													<StackPanel Classes="kpi-info">
+														<Grid ColumnDefinitions="Auto,*">
+															<TextBlock Grid.Column="0" 
+																	   Background="AntiqueWhite"
+                                                                       Classes="kpi-info-icon" 
+                                                                       Text="{Binding Base.Icon}"/>
+															<TextBlock Grid.Column="1" 
+                                                                       Classes="kpi-info-title" 
+                                                                       Text="{Binding Base.Title}"/>
+                                                        </Grid>
+														<TextBlock Classes="kpi-info-description"
+                                                                   Text="{Binding Base.Description}"/>
+                                                    </StackPanel>
+                                                </Grid>
+												<Button Grid.Column="2">
+													<Button.Template>
+														<ControlTemplate>
+                                                            <Border Classes="kpi-delete-btn">
+                                                                <TextBlock Text="🗑️" Classes="kpi-delete-btn"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+						<Border Grid.Row="3"
+                                Classes="actions-bar">
+							<Grid Classes="actions-bar" 
+                                  ColumnDefinitions="*,Auto,Auto">
+								<Button Grid.Column="1" 
+										Content="Отмена"
+                                        Classes="btn btn-secondary"/>
+								<Button Grid.Column="2" 
+										Content="Сохранить настройки"
+                                        Classes="btn btn-primary"/>
+                            </Grid>
+                        </Border>
+					</Grid>
+				</Grid>
+			</Border>
+		</Grid>
+	</Border>
 </UserControl>

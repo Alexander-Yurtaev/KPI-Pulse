@@ -153,11 +153,7 @@
             </Grid>
         </Border>
         
-        <rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}">
-            <rxui:RoutedViewHost.ViewLocator>
-                <ui:AppViewLocator/>
-            </rxui:RoutedViewHost.ViewLocator>
-        </rxui:RoutedViewHost>
+        <rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}"/>
     </Grid>
 
 </Window>

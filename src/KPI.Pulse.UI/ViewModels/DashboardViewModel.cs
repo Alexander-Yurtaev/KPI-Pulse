@@ -11,14 +11,14 @@ namespace KPI.Pulse.UI.ViewModels
 {
     public class DashboardViewModel: ViewModelBase, IRoutableViewModel
     {
-        private readonly ObservableCollection<DashboardIndicator> _indicators;
+        private readonly ObservableCollection<Kpi> _kpis;
         private readonly ObservableCollection<Alert> _alerts;
         private readonly ObservableCollection<Goal> _goals;
 
         public string? UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
         public IScreen HostScreen { get; }
 
-        public IEnumerable<DashboardIndicator> Indicators => _indicators;
+        public IEnumerable<Kpi> Kpis => _kpis;
 
         public ChartViewModel Chart { get; set; }
         public int AlertsCount => Alerts?.Count() ?? 0;
@@ -32,7 +32,7 @@ namespace KPI.Pulse.UI.ViewModels
             var uiService = Locator.Current.GetService<IUiService>() ??
                             throw new InvalidOperationException(nameof(IUiService));
 
-            _indicators = new ObservableCollection<DashboardIndicator>(uiService.GetDashboardIndicators());
+            _kpis = new ObservableCollection<Kpi>(uiService.GetKpis());
             _alerts = new ObservableCollection<Alert>(uiService.GetAlerts());
             _goals = new ObservableCollection<Goal>(uiService.GetGoals());
         }

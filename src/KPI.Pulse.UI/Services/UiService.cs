@@ -1,6 +1,7 @@
 ﻿using KPI.Pulse.UI.Models;
 using KPI.Pulse.UI.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 using KPI.Pulse.UI.Models.Enums;
 using ReactiveUI;
 
@@ -30,21 +31,21 @@ namespace KPI.Pulse.UI.Services
             yield return new TechItem("JSON для хранения настроек");
         }
 
-        public IEnumerable<DashboardIndicator> GetDashboardIndicators()
+        public IEnumerable<Kpi> GetKpis()
         {
-            yield return new DashboardIndicator("Выручка", "💰", "2.4M ₽", 
+            yield return new Kpi(1, "Выручка", "Общая выручка компании за период", "💰", "2.4M ₽", 
                 TrendStatus.Success, "▲", "+12.5 %", "к прошлому периоду",
                 "Порог:", "▼", "1.5M ₽");
 
-            yield return new DashboardIndicator("Прибыль", "📈", "845K ₽",
+            yield return new Kpi(2, "Прибыль", "Чистая операционная прибыль", "📈", "845K ₽",
                 TrendStatus.Danger, "▼", "-3.2 %", "к прошлому периоду",
                 "", "⚠️", "Ниже порога(1M ₽)");
 
-            yield return new DashboardIndicator("Клиенты", "👥", "1,284",
+            yield return new Kpi(3, "Клиенты", "Количество новых клиентов", "👥", "1,284",
                 TrendStatus.Success, "▲", "+8.3 %", "новых",
                 "Цель:", "", "1500");
 
-            yield return new DashboardIndicator("Конверсия", "🔄", "15.8 %",
+            yield return new Kpi(4, "Конверсия", "Процент конверсии в продажу", "🔄", "15.8 %",
                 TrendStatus.Warning, "▲", "+1.2 %", "к прошлому",
                 "Целевой диапазон:", "⚡", "14 - 18%");
         }
@@ -60,6 +61,11 @@ namespace KPI.Pulse.UI.Services
             yield return new Goal("💰", "Выручка", 2_400_000, 3_000_000, "2.4M / 3M");
             yield return new Goal("👥", "Клиенты", 1_284, 1_500, "1 284 / 1 500");
             yield return new Goal("🔄", "Конверсия", 15.8, 18, "15.8% / 18%");
+        }
+
+        public IEnumerable<Kpi> GetSavedKpis()
+        {
+            return GetKpis().Take(1);
         }
     }
 }

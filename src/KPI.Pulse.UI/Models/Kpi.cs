@@ -2,13 +2,17 @@
 
 namespace KPI.Pulse.UI.Models
 {
-    public class DashboardIndicator
+    public class Kpi
     {
-        public DashboardIndicator(string title, string icon, string value,
+        public Kpi(
+            int id,
+            string title, string description, string icon, string value,
             TrendStatus trendStatus, string trendIcon, string trendValue, string trendDescription, string thresholdTitle, 
             string thresholdIcon, string thresholdValue)
         {
+            Id = id;
             Title = title;
+            Description = description;
             Icon = icon;
             Value = value;
             TrendStatus = trendStatus;
@@ -20,7 +24,9 @@ namespace KPI.Pulse.UI.Models
             ThresholdValue = thresholdValue;
         }
 
+        public int Id { get; set; }
         public string Title { get; init; }
+        public string Description { get; init; }
         public string Icon { get; init; }
         public string Value { get; init; }
         public TrendStatus TrendStatus { get; init; }

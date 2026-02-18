@@ -69,7 +69,6 @@ namespace KPI.Pulse.UI.ViewModels
                 {
                     var box = MessageBoxManager
                         .GetMessageBoxStandard("Заголовок", "Привет, мир!", ButtonEnum.Ok, Icon.Info);
-
                     await box.ShowAsync();
 
                     SelectedNavItem = null;
