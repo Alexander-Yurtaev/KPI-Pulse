@@ -54,5 +54,12 @@ namespace KPI.Pulse.UI.Services
             yield return new Alert("⚠️", "Прибыль ниже порога", AlertStatus.Danger,"Текущее значение: 845K ₽ (порог: 1M ₽)");
             yield return new Alert("⚡", "Конверсия приближается к верхней границе", AlertStatus.Warning, "15.8% (диапазон: 14-18%)");
         }
+
+        public IEnumerable<Goal> GetGoals()
+        {
+            yield return new Goal("💰", "Выручка", 2_400_000, 3_000_000, "2.4M / 3M");
+            yield return new Goal("👥", "Клиенты", 1_284, 1_500, "1 284 / 1 500");
+            yield return new Goal("🔄", "Конверсия", 15.8, 18, "15.8% / 18%");
+        }
     }
 }

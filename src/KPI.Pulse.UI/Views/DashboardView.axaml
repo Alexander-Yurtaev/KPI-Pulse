@@ -167,6 +167,28 @@
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Foreground" Value="#718096"/>
         </Style>
+        <Style Selector="Grid.goal-item">
+			<Setter Property="ColumnSpacing" Value="12"/>
+			<Setter Property="RowSpacing" Value="12"/>
+        </Style>
+        <Style Selector="Border.goal-item">
+            <Setter Property="Padding" Value="0,8"/>
+        </Style>
+		<Style Selector="TextBlock.goal-icon">
+
+        </Style>
+        <Style Selector="TextBlock.goal-title">
+
+        </Style>
+        <Style Selector="ProgressBar.goal-progress">
+			<Setter Property="Foreground" Value="{StaticResource WindowGradient}"/>
+			<Setter Property="Background" Value="#e2e8f0"/>
+			<Setter Property="Height" Value="12"/>
+			<Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        <Style Selector="TextBlock.goal-description">
+
+        </Style>
 	</UserControl.Styles>
 
 	<Border Classes="container" Padding="20,40">
@@ -282,7 +304,7 @@
 					<Border Grid.Column="0" Classes="bottom-panel">
 						<Grid RowDefinitions="Auto,*">
 							<StackPanel Grid.Row="0" Classes="bottom-panel-title" Orientation="Horizontal">
-								<TextBlock Text="⚠️" Classes="bottom-panel-title"/>
+								<TextBlock Text="⚠️"/>
 								<TextBlock Text="Алерты" Classes="bottom-panel-title"/>
 								<Border Classes="bottom-panel-counter">
 									<TextBlock Classes="bottom-panel-counter-value"
@@ -326,7 +348,37 @@
 						</Grid>
 					</Border>
 					<Border Grid.Column="1" Classes="bottom-panel">
-						<TextBlock Text="Цели"/>
+						<Grid RowDefinitions="Auto,*">
+							<StackPanel Grid.Row="0" Classes="bottom-panel-title" Orientation="Horizontal">
+								<TextBlock Text="🎯"/>
+								<TextBlock Text="Цели" Classes="bottom-panel-title"/>
+							</StackPanel>
+							<ScrollViewer Grid.Row="1"
+										  HorizontalScrollBarVisibility="Disabled"
+										  VerticalScrollBarVisibility="Auto">
+								<ItemsControl ItemsSource="{Binding Goals}">
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<StackPanel />
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>
+									<ItemsControl.ItemTemplate>
+										<DataTemplate DataType="models:Goal">
+                                            <Border Classes="goal-item">
+                                                <Grid 
+                                                    Classes="goal-item"
+                                                    ColumnDefinitions="Auto,Auto,*,Auto">
+                                                    <TextBlock Grid.Column="0" Classes="goal-icon" Text="{Binding Icon}"/>
+                                                    <TextBlock Grid.Column="1" Classes="goal-title" Text="{Binding Title}"/>
+                                                    <ProgressBar Grid.Column="2" Classes="goal-progress" Value="{Binding Value}" Maximum="{Binding Max}"></ProgressBar>
+                                                    <TextBlock Grid.Column="3" Classes="goal-description" Text="{Binding Description}"/>
+                                                </Grid>
+                                            </Border>
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+							</ScrollViewer>
+						</Grid>
 					</Border>
 				</Grid>
 			</Border>

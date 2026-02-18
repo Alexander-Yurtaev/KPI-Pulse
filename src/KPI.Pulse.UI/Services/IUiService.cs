@@ -11,4 +11,5 @@ public interface IUiService
     IEnumerable<TechItem> GetTechItems();
     IEnumerable<DashboardIndicator> GetDashboardIndicators();
     IEnumerable<Alert> GetAlerts();
+    IEnumerable<Goal> GetGoals();
 }
