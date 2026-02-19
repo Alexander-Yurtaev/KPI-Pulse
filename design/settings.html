@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPI Pulse · Настройки</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f2f5;
+            color: #1a1f36;
+        }
+
+        .app {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Верхняя панель */
+        .top-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #4a5568;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .nav-link.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Хлебные крошки */
+        .breadcrumb {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        /* Основной контент */
+        .settings-container {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .settings-title {
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .device-preview {
+            display: flex;
+            gap: 8px;
+            background: #f7fafc;
+            padding: 6px;
+            border-radius: 12px;
+        }
+
+        .device-btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .device-btn.active {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            color: #667eea;
+        }
+
+        /* Секции настроек */
+        .settings-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Карточка добавления KPI */
+        .add-kpi-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 2px dashed #cbd5e0;
+        }
+
+        .add-kpi-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .add-kpi-select {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            background: white;
+        }
+
+        .add-kpi-btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .add-kpi-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        /* Список активных KPI */
+        .kpi-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-item {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .kpi-drag {
+            color: #a0aec0;
+            cursor: move;
+            font-size: 20px;
+        }
+
+        .kpi-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+
+        .kpi-info {
+            flex: 1;
+        }
+
+        .kpi-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .kpi-desc {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .kpi-threshold {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .threshold-input {
+            width: 100px;
+            padding: 6px 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .threshold-type {
+            padding: 4px 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            font-size: 13px;
+        }
+
+        .kpi-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .kpi-action-btn {
+            padding: 6px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #a0aec0;
+            border-radius: 6px;
+        }
+
+        .kpi-action-btn:hover {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        /* Настройки темы */
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .theme-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .theme-card:hover {
+            border-color: #667eea;
+        }
+
+        .theme-card.active {
+            border-color: #667eea;
+            background: #ebf4ff;
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .theme-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .theme-desc {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        /* Настройки обновления */
+        .refresh-settings {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .refresh-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .refresh-label {
+            min-width: 150px;
+            color: #4a5568;
+        }
+
+        .refresh-select {
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            min-width: 200px;
+        }
+
+        .refresh-note {
+            font-size: 13px;
+            color: #a0aec0;
+        }
+
+        /* Кнопки действий */
+        .actions-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #f7fafc;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #a0aec0;
+            font-size: 14px;
+        }
+
+        /* Стили для переключателей */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e0;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #667eea;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="logo">
+                <span>📊 KPI Pulse</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Дашборд</a>
+                <a href="analytics.html" class="nav-link">Аналитика</a>
+                <a href="settings.html" class="nav-link active">Настройки</a>
+            </div>
+            <div class="status">
+                <span>⚙️ Конфигурация</span>
+            </div>
+        </div>
+
+        <!-- Хлебные крошки -->
+        <div class="breadcrumb">
+            <a href="dashboard.html">Дашборд</a> > 
+            <span>Настройки</span>
+        </div>
+
+        <!-- Основной контейнер настроек -->
+        <div class="settings-container">
+            <div class="settings-header">
+                <div class="settings-title">
+                    <span>⚙️ Настройки мониторов</span>
+                </div>
+                <div class="device-preview">
+                    <button class="device-btn active">🖥️ Desktop</button>
+                    <button class="device-btn">📱 Mobile</button>
+                    <button class="device-btn">🌐 Web</button>
+                </div>
+            </div>
+
+            <!-- Секция: Добавление KPI -->
+            <div class="settings-section">
+                <div class="section-title">
+                    <span>📈 Управление KPI</span>
+                </div>
+                
+                <div class="add-kpi-card">
+                    <div class="add-kpi-row">
+                        <select class="add-kpi-select">
+                            <option value="">Выберите показатель для отслеживания...</option>
+                            <option value="revenue">Выручка</option>
+                            <option value="profit">Прибыль</option>
+                            <option value="clients">Новые клиенты</option>
+                            <option value="conversion">Конверсия</option>
+                            <option value="margin">Маржинальность</option>
+                            <option value="churn">Отток клиентов</option>
+                            <option value="lifetime">LTV</option>
+                        </select>
+                        <button class="add-kpi-btn">
+                            <span>➕</span> Добавить KPI
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Список активных KPI -->
+                <div class="kpi-list">
+                    <!-- KPI 1: Выручка -->
+                    <div class="kpi-item">
+                        <div class="kpi-drag">⋮⋮</div>
+                        <input type="checkbox" class="kpi-checkbox" checked>
+                        <div class="kpi-info">
+                            <div class="kpi-name">💰 Выручка</div>
+                            <div class="kpi-desc">Общая выручка компании за период</div>
+                        </div>
+                        <div class="kpi-threshold">
+                            <span style="font-size: 13px;">Порог:</span>
+                            <input type="text" class="threshold-input" value="1500000">
+                            <select class="threshold-type">
+                                <option>▼ ниже</option>
+                                <option>▲ выше</option>
+                                <option>диапазон</option>
+                            </select>
+                        </div>
+                        <div class="kpi-actions">
+                            <button class="kpi-action-btn">✏️</button>
+                            <button class="kpi-action-btn">🗑️</button>
+                        </div>
+                    </div>
+
+                    <!-- KPI 2: Прибыль -->
+                    <div class="kpi-item">
+                        <div class="kpi-drag">⋮⋮</div>
+                        <input type="checkbox" class="kpi-checkbox" checked>
+                        <div class="kpi-info">
+                            <div class="kpi-name">📈 Прибыль</div>
+                            <div class="kpi-desc">Чистая операционная прибыль</div>
+                        </div>
+                        <div class="kpi-threshold">
+                            <span style="font-size: 13px;">Порог:</span>
+                            <input type="text" class="threshold-input" value="1000000">
+                            <select class="threshold-type">
+                                <option>▼ ниже</option>
+                                <option selected>▲ выше</option>
+                                <option>диапазон</option>
+                            </select>
+                        </div>
+                        <div class="kpi-actions">
+                            <button class="kpi-action-btn">✏️</button>
+                            <button class="kpi-action-btn">🗑️</button>
+                        </div>
+                    </div>
+
+                    <!-- KPI 3: Клиенты -->
+                    <div class="kpi-item">
+                        <div class="kpi-drag">⋮⋮</div>
+                        <input type="checkbox" class="kpi-checkbox" checked>
+                        <div class="kpi-info">
+                            <div class="kpi-name">👥 Клиенты</div>
+                            <div class="kpi-desc">Количество новых клиентов</div>
+                        </div>
+                        <div class="kpi-threshold">
+                            <span style="font-size: 13px;">Цель:</span>
+                            <input type="text" class="threshold-input" value="1500">
+                            <span style="font-size: 13px;">👥</span>
+                        </div>
+                        <div class="kpi-actions">
+                            <button class="kpi-action-btn">✏️</button>
+                            <button class="kpi-action-btn">🗑️</button>
+                        </div>
+                    </div>
+
+                    <!-- KPI 4: Конверсия (неактивный) -->
+                    <div class="kpi-item" style="opacity: 0.6;">
+                        <div class="kpi-drag">⋮⋮</div>
+                        <input type="checkbox" class="kpi-checkbox">
+                        <div class="kpi-info">
+                            <div class="kpi-name">🔄 Конверсия</div>
+                            <div class="kpi-desc">Процент конверсии в продажу</div>
+                        </div>
+                        <div class="kpi-threshold">
+                            <span style="font-size: 13px;">Диапазон:</span>
+                            <input type="text" class="threshold-input" value="14" style="width: 60px;"> 
+                            <span>-</span>
+                            <input type="text" class="threshold-input" value="18" style="width: 60px;">
+                            <span>%</span>
+                        </div>
+                        <div class="kpi-actions">
+                            <button class="kpi-action-btn">✏️</button>
+                            <button class="kpi-action-btn">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция: Оформление -->
+            <div class="settings-section">
+                <div class="section-title">
+                    <span>🎨 Тема оформления</span>
+                </div>
+                
+                <div class="theme-options">
+                    <div class="theme-card active">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%); border: 1px solid #e2e8f0;"></div>
+                        <div class="theme-name">Светлая</div>
+                        <div class="theme-desc">Классическая светлая тема</div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);"></div>
+                        <div class="theme-name">Темная</div>
+                        <div class="theme-desc">Для работы в темное время</div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                        <div class="theme-name">Корпоративная</div>
+                        <div class="theme-desc">Брендированная тема</div>
+                    </div>
+                </div>
+
+                <!-- Дополнительные настройки темы -->
+                <div style="display: flex; gap: 24px; margin-top: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 14px; color: #4a5568;">Компактный режим</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 14px; color: #4a5568;">Анимации</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция: Обновление данных -->
+            <div class="settings-section">
+                <div class="section-title">
+                    <span>🔄 Интервал обновления</span>
+                </div>
+
+                <div class="refresh-settings">
+                    <div class="refresh-row">
+                        <span class="refresh-label">Частота обновления данных:</span>
+                        <select class="refresh-select">
+                            <option>1 секунда</option>
+                            <option>5 секунд</option>
+                            <option>15 секунд</option>
+                            <option selected>30 секунд</option>
+                            <option>1 минута</option>
+                            <option>5 минут</option>
+                            <option>Вручную</option>
+                        </select>
+                        <span class="refresh-note">Рекомендуется: 30 секунд</span>
+                    </div>
+                    
+                    <div style="margin-top: 16px; display: flex; align-items: center; gap: 12px;">
+                        <input type="checkbox" id="realtime" checked>
+                        <label for="realtime" style="font-size: 14px;">Включить real-time обновления (SignalR)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция: Уведомления -->
+            <div class="settings-section">
+                <div class="section-title">
+                    <span>🔔 Уведомления</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <input type="checkbox" id="alert1" checked>
+                        <label for="alert1" style="font-size: 14px;">Всплывающие уведомления при достижении порогов</label>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <input type="checkbox" id="alert2" checked>
+                        <label for="alert2" style="font-size: 14px;">Звуковые оповещения для критичных KPI</label>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <input type="checkbox" id="alert3">
+                        <label for="alert3" style="font-size: 14px;">Email-рассылка отчетов</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="actions-bar">
+                <button class="btn btn-secondary">Отмена</button>
+                <button class="btn btn-primary">Сохранить настройки</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 KPI Pulse · Конфигурация мониторов</p>
+        </footer>
+    </div>
+</body>
+</html>
