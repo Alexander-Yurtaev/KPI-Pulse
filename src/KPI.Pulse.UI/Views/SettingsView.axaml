@@ -232,7 +232,7 @@
                                 <Grid Grid.ColumnDefinitions="*,Auto">
                                     <ComboBox Grid.Column="0"
                                               HorizontalAlignment="Stretch"
-                                              ItemsSource="{Binding Kpis}"
+                                              ItemsSource="{Binding ComboboxKpis}"
 											  SelectedItem="{Binding SelectedKpi}"
                                               Classes="add-kpi-select">
 										<ComboBox.ItemTemplate>
