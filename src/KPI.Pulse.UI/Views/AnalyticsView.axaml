@@ -1,12 +1,109 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:KPI.Pulse.UI.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="930"
              x:Class="KPI.Pulse.UI.Views.AnalyticsView"
              x:DataType="vm:AnalyticsViewModel"
              x:CompileBindings="True">
-    Welcome to Analytics!
+    
+    <UserControl.Styles>
+        <Style Selector="Border.app">
+            <Setter Property="Background" Value="#f0f2f5"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
+        <Style Selector="Grid.app">
+        </Style>
+        <Style Selector="Border.breadcrumb">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+        <Style Selector="TextBlock.breadcrumb-link">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#667eea"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="TextBlock.breadcrumb-text">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#718096"/>
+        </Style>
+        <Style Selector="Grid.analytics-board">
+            <Setter Property="ColumnSpacing" Value="20"/>
+            <Setter Property="RowSpacing" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+        <Style Selector="Border.tree-title">
+            <Setter Property="Margin" Value="0,0,0,16"/>
+            <Setter Property="Padding" Value="0,0,0,12"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#e2e8f0"/>
+        </Style>
+        <Style Selector="TextBlock.tree-title-icon">
+            
+        </Style>
+        <Style Selector="TextBlock.tree-title">
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="BoxShadow" Value="0 4 12 0 #0D000000"/>
+        </Style>
+        <Style Selector="Border.tree-panel">
+            <Setter Property="Width" Value="300"/>
+        </Style>
+        <Style Selector="Border.chart-panel">
+        </Style>
+        <Style Selector="Border.data-grid">
+        </Style>
+    </UserControl.Styles>
+
+    <Border Classes="app">
+        <Grid RowDefinitions="Auto,*,*" Classes="app">
+            <Border Grid.Row="0" Classes="breadcrumb">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Command="{Binding NavigateToNavItemCommand}" 
+                            CommandParameter="{Binding RootNavItem}">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Classes="breadcrumb-link" Text="{Binding RootNavItem.Title}"/>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <TextBlock Classes="breadcrumb-text" Text=">"/>
+                    <TextBlock Classes="breadcrumb-text" Text="Настройки"/>
+                </StackPanel>
+            </Border>
+            <Grid Grid.Row="1" Classes="analytics-board" ColumnDefinitions="Auto,*">
+                <Border Grid.Column="0" Classes="panel tree-panel">
+                    <Grid Classes="tree-panel"
+                          RowDefinitions="Auto,*,Auto">
+                        <Border Grid.Row="0"
+                                Classes="tree-title" >
+                            <Grid Classes="tree-title" 
+                                  ColumnDefinitions="Auto,*">
+                                <TextBlock Grid.Column="0" Classes="tree-title-icon" Text="🌳"/>
+                                <TextBlock Grid.Column="1" Classes="tree-title" Text="Дерево KPI"/>
+                            </Grid>
+                        </Border>
+                        <TextBlock Grid.Row="1" Text="Tree"/>
+                        <TextBlock Grid.Row="2" Text="Bottom"/>
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1" Classes="panel chart-panel">
+
+                </Border>
+            </Grid>
+            <Border Grid.Row="2" Classes="panel data-grid">
+
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>
