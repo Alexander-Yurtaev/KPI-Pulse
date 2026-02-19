@@ -48,9 +48,15 @@
 ## 🖼️ Скриншоты
 
 <p align="center">
-  <img src="screenshots/dashboard.png" alt="Дашборд" width="700"/>
+  <img src="screenshots/main.png" alt="Главная" width="700"/>
   <br/>
   <em>Главный экран с KPI-карточками</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/dashboard.png" alt="Дашборд" width="700"/>
+  <br/>
+  <em>Экран дашборда</em>
 </p>
 
 <p align="center">
