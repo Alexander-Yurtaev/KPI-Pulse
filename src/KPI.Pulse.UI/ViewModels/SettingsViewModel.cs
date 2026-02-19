@@ -42,9 +42,9 @@ namespace KPI.Pulse.UI.ViewModels
         }
 
         public ReactiveCommand<NavItem, Unit> NavigateToNavItemCommand { get; }
-        public ReactiveCommand<Kpi, Unit> AddKpiCommand { get; }
+        public ReactiveCommand<Kpi?, Unit> AddKpiCommand { get; }
         public ReactiveCommand<Unit, Unit> SaveCommand { get; }
-        public ReactiveCommand<KpiViewModel, Unit> DeleteCommand { get; }
+        public ReactiveCommand<KpiViewModel?, Unit> DeleteCommand { get; }
 
         public SettingsViewModel(IScreen screen)
         {
@@ -68,7 +68,7 @@ namespace KPI.Pulse.UI.ViewModels
             var canAddKpiCommand = this.WhenAnyValue(vm => vm.SelectedKpi,
                 (Kpi? selected) => selected != null);
 
-            AddKpiCommand = ReactiveCommand.Create<Kpi>(kpi =>
+            AddKpiCommand = ReactiveCommand.Create<Kpi?>(kpi =>
             {
                 if (kpi is null) return;
                 if (_savedKpiVms.Any(si => si.Base.Id == kpi.Id)) return;
@@ -103,7 +103,7 @@ namespace KPI.Pulse.UI.ViewModels
                 }
             });
 
-            DeleteCommand = ReactiveCommand.Create<KpiViewModel>(kpiVm =>
+            DeleteCommand = ReactiveCommand.Create<KpiViewModel?>(kpiVm =>
             {
                 if (kpiVm is null) return;
                 if (_comboboxKpis.Any(si => si.Id == kpiVm.Base.Id)) return;
