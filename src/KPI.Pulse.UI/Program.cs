@@ -19,6 +19,7 @@ namespace KPI.Pulse.UI
         public static AppBuilder BuildAvaloniaApp()
         {
             Locator.CurrentMutable.RegisterLazySingleton<IUiService>(() => new UiService());
+            Locator.CurrentMutable.RegisterLazySingleton<ISettingService>(() => new SettingService());
 
             return AppBuilder.Configure<App>()
                 .UsePlatformDetect()

@@ -249,7 +249,8 @@
                                     <Button Grid.Column="1"
                                             Content="➕Добавить KPI"
                                             Classes="add-kpi-btn"
-                                            Command="{Binding AddKpiCommand}"/>
+                                            Command="{Binding AddKpiCommand}"
+                                            CommandParameter="{Binding SelectedKpi}"/>
                                 </Grid>
                             </Border>
                         </Grid>
@@ -285,7 +286,10 @@
                                                                    Text="{Binding Base.Description}"/>
                                                     </StackPanel>
                                                 </Grid>
-												<Button Grid.Column="2">
+												<Button Grid.Column="2" x:CompileBindings="False"
+                                                        Command="{Binding Path=DataContext.DeleteCommand, 
+														                  RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                        CommandParameter="{Binding}">
 													<Button.Template>
 														<ControlTemplate>
                                                             <Border Classes="kpi-delete-btn">
@@ -309,7 +313,8 @@
                                         Classes="btn btn-secondary"/>
 								<Button Grid.Column="2" 
 										Content="Сохранить настройки"
-                                        Classes="btn btn-primary"/>
+                                        Classes="btn btn-primary"
+                                        Command="{Binding SaveCommand}"/>
                             </Grid>
                         </Border>
 					</Grid>
