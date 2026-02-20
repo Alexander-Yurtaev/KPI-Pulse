@@ -3,8 +3,10 @@ using KPI.Pulse.UI.Services;
 using ReactiveUI;
 using Splat;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using KPI.Pulse.UI.ViewModels.Tree;
 
 namespace KPI.Pulse.UI.ViewModels
 {
@@ -21,7 +23,16 @@ namespace KPI.Pulse.UI.ViewModels
             init => this.RaiseAndSetIfChanged(ref _rootNavItem, value);
         }
 
+        private readonly ObservableCollection<Node> _treeItems;
+        public ObservableCollection<Node> TreeItems
+        {
+            get => _treeItems;
+            init => this.RaiseAndSetIfChanged(ref _treeItems, value);
+        }
+
         public ReactiveCommand<NavItem, Unit> NavigateToNavItemCommand { get; }
+        
+        public Node SelectedNode { get; set; }
 
         public AnalyticsViewModel(IScreen screen)
         {
@@ -33,6 +44,9 @@ namespace KPI.Pulse.UI.ViewModels
 
             var navItems = uiService.GetNavItems(HostScreen);
             _rootNavItem = navItems.First();
+
+            var treeItems = uiService.KpiTreeItems();
+            _treeItems = new ObservableCollection<Node>(treeItems);
 
             NavigateToNavItemCommand = ReactiveCommand.Create<NavItem>(navItem =>
             {

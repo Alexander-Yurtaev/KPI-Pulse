@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using KPI.Pulse.UI.Models;
-using KPI.Pulse.UI.ViewModels;
+﻿using KPI.Pulse.UI.Models;
+using KPI.Pulse.UI.ViewModels.Tree;
+using LiveChartsCore;
 using ReactiveUI;
+using System.Collections.Generic;
 
 namespace KPI.Pulse.UI.Services;
 
@@ -14,4 +15,6 @@ public interface IUiService
     IEnumerable<Alert> GetAlerts();
     IEnumerable<Goal> GetGoals();
     IEnumerable<Kpi> GetSavedKpis();
+    IEnumerable<Node> KpiTreeItems();
+    ISeries[] CreateSeries();
 }

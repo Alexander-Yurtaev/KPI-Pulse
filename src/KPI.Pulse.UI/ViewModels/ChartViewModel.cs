@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using KPI.Pulse.UI.Services;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using Splat;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KPI.Pulse.UI.ViewModels
 {
     public class ChartViewModel
     {
-        public ISeries[] Series { get; set; } = CreateSeries();
+        public ISeries[] Series { get; init; }
 
         public Axis[] XAxes { get; set; } =
         {
@@ -27,33 +29,12 @@ namespace KPI.Pulse.UI.ViewModels
             }
         };
 
-        private static ISeries[] CreateSeries()
+        public ChartViewModel()
         {
-            var random = new Random();
+            var uiService = Locator.Current.GetService<IUiService>() ??
+                            throw new InvalidOperationException(nameof(IUiService));
 
-            var result = new List<ISeries>
-            {
-                new ColumnSeries<double>
-                {
-                    Name = "Выручка",
-                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
-                    Fill = new SolidColorPaint(new SKColor(0x66, 0x7e, 0xea)) //#667eea
-                },
-                new ColumnSeries<double>
-                {
-                    Name = "Прибыль",
-                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
-                    Fill = new SolidColorPaint(new SKColor(0x48, 0xbb, 0x78)) //#48bb78
-                },
-                new ColumnSeries<double>
-                {
-                    Name = "Клиенты",
-                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
-                    Fill = new SolidColorPaint(new SKColor(0xf6, 0xad, 0x55)) //#f6ad55
-                }
-            };
-
-            return result.ToArray();
+            Series = uiService.CreateSeries();
         }
     }
 }

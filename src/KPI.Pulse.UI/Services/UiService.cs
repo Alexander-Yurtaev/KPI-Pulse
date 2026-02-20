@@ -1,9 +1,15 @@
 ﻿using KPI.Pulse.UI.Models;
+using KPI.Pulse.UI.Models.Enums;
 using KPI.Pulse.UI.ViewModels;
+using KPI.Pulse.UI.ViewModels.Tree;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using ReactiveUI;
+using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using KPI.Pulse.UI.Models.Enums;
-using ReactiveUI;
 
 namespace KPI.Pulse.UI.Services
 {
@@ -66,6 +72,65 @@ namespace KPI.Pulse.UI.Services
         public IEnumerable<Kpi> GetSavedKpis()
         {
             return GetKpis().Take(1);
+        }
+
+        public IEnumerable<Node> KpiTreeItems()
+        {
+            var items = new List<Node>();
+
+            var rootItem = new Node("📊", "Все показатели");
+            
+            var revenue = new Node("💰", "Выручка");
+            var clients = new Node("👥", "Клиенты");
+            var conversion = new Node("🔄", "Конверсия");
+
+            rootItem.Children.Add(revenue);
+            rootItem.Children.Add(clients);
+            rootItem.Children.Add(conversion);
+
+            revenue.Children.Add(new Leaf("🇷🇺", "РФ", "1.2M"));
+            revenue.Children.Add(new Leaf("🇰🇿", "СНГ", "845K"));
+            revenue.Children.Add(new Leaf("🌍", "Другое", "355K"));
+
+            clients.Children.Add(new Leaf("🇷🇺", "РФ", "1.284"));
+            clients.Children.Add(new Leaf("🇰🇿", "СНГ", "780"));
+            clients.Children.Add(new Leaf("🌍", "Другое", "437"));
+
+            conversion.Children.Add(new Leaf("🇷🇺", "РФ", "15%"));
+            conversion.Children.Add(new Leaf("🇰🇿", "СНГ", "7%"));
+            conversion.Children.Add(new Leaf("🌍", "Другое", "3%"));
+
+            items.Add(rootItem);
+            return items;
+        }
+
+        public ISeries[] CreateSeries()
+        {
+            var random = new Random();
+
+            var result = new List<ISeries>
+            {
+                new ColumnSeries<double>
+                {
+                    Name = "Выручка",
+                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                    Fill = new SolidColorPaint(new SKColor(0x66, 0x7e, 0xea)) //#667eea
+                },
+                new ColumnSeries<double>
+                {
+                    Name = "Прибыль",
+                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                    Fill = new SolidColorPaint(new SKColor(0x48, 0xbb, 0x78)) //#48bb78
+                },
+                new ColumnSeries<double>
+                {
+                    Name = "Клиенты",
+                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                    Fill = new SolidColorPaint(new SKColor(0xf6, 0xad, 0x55)) //#f6ad55
+                }
+            };
+
+            return result.ToArray();
         }
     }
 }

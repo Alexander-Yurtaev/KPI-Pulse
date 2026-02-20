@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
+             xmlns:tree="clr-namespace:KPI.Pulse.UI.ViewModels.Tree"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="930"
              x:Class="KPI.Pulse.UI.Views.AnalyticsView"
              x:DataType="vm:AnalyticsViewModel"
@@ -93,7 +94,60 @@
                                 <TextBlock Grid.Column="1" Classes="tree-title" Text="Дерево KPI"/>
                             </Grid>
                         </Border>
-                        <TextBlock Grid.Row="1" Text="Tree"/>
+                        <TreeView Grid.Row="1"
+                                  SelectedItem="{Binding SelectedNode}"
+                                  ItemsSource="{Binding TreeItems}">
+                            <TreeView.Styles>
+                                <Style Selector="Grid.tree-item">
+                                    <Setter Property="Margin" Value="8"/>
+                                    <Setter Property="ColumnSpacing" Value="8"/>
+                                </Style>
+                                <Style Selector="TextBlock">
+                                    <Setter Property="FontSize" Value="12"/>
+                                </Style>
+                                <Style Selector="TextBlock.tree-item-icon">
+                                    <Setter Property="FontSize" Value="14"/>
+                                </Style>
+                                <Style Selector="TextBlock.tree-item-title">
+                                    <Setter Property="FontSize" Value="14"/>
+                                </Style>
+                                <Style Selector=":selected Border">
+                                    <Setter Property="Background" Value="#ebf4ff"/>
+                                </Style>
+                                <Style Selector=":selected TextBlock">
+                                    <Setter Property="Foreground" Value="#667eea"/>
+                                </Style>
+                                <Style Selector=":selected TextBlock.tree-item-title">
+                                    <Setter Property="FontWeight" Value="500"/>
+                                </Style>
+                            </TreeView.Styles>
+                            <TreeView.DataTemplates>
+                                <TreeDataTemplate DataType="tree:Node" ItemsSource="{Binding Children}">
+                                    <Grid ColumnDefinitions="Auto,Auto,*,Auto"
+                                          Classes="tree-item">
+                                        <TextBlock Grid.Column="0" 
+                                                   Classes="tree-item-icon"
+                                                   Text="{Binding Icon}"/>
+                                        <TextBlock Grid.Column="1" 
+                                                   Classes="tree-item-title"
+                                                   Text="{Binding Title}"/>
+                                    </Grid>
+                                </TreeDataTemplate>
+                                <TreeDataTemplate DataType="tree:Leaf">
+                                    <Grid ColumnDefinitions="Auto,Auto,*,Auto"
+                                          Classes="tree-item">
+                                        <TextBlock Grid.Column="0" 
+                                                   Classes="tree-item-icon"
+                                                   Text="{Binding Icon}"/>
+                                        <TextBlock Grid.Column="1" 
+                                                   Classes="tree-item-title"
+                                                   Text="{Binding Title}"/>
+                                        <TextBlock Grid.Column="3" 
+                                                   Text="{Binding Value}"/>
+                                    </Grid>
+                                </TreeDataTemplate>
+                            </TreeView.DataTemplates>
+                        </TreeView>
                         <TextBlock Grid.Row="2" Text="Bottom"/>
                     </Grid>
                 </Border>
