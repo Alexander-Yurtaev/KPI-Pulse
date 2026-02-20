@@ -1,4 +1,6 @@
-﻿using LiveChartsCore;
+﻿using Avalonia.Input;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 
 namespace KPI.Pulse.UI.ViewModels.Tree
 {
@@ -9,8 +11,8 @@ namespace KPI.Pulse.UI.ViewModels.Tree
             Value = value;
         }
 
-        
+        public Node Parent { get; set; }
         public string Value { get; init; }
-        public ISeries[] Series { get; init; }
+        public StackedColumnSeries<double> Series { get; init; }
     }
 }

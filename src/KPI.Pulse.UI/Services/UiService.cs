@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace KPI.Pulse.UI.Services
 {
-    public class UiService: IUiService
+    public class UiService : IUiService
     {
         public IEnumerable<PlatformItem> GetPlatforms()
         {
@@ -39,7 +39,7 @@ namespace KPI.Pulse.UI.Services
 
         public IEnumerable<Kpi> GetKpis()
         {
-            yield return new Kpi(1, "Выручка", "Общая выручка компании за период", "💰", "2.4M ₽", 
+            yield return new Kpi(1, "Выручка", "Общая выручка компании за период", "💰", "2.4M ₽",
                 TrendStatus.Success, "▲", "+12.5 %", "к прошлому периоду",
                 "Порог:", "▼", "1.5M ₽");
 
@@ -58,7 +58,7 @@ namespace KPI.Pulse.UI.Services
 
         public IEnumerable<Alert> GetAlerts()
         {
-            yield return new Alert("⚠️", "Прибыль ниже порога", AlertStatus.Danger,"Текущее значение: 845K ₽ (порог: 1M ₽)");
+            yield return new Alert("⚠️", "Прибыль ниже порога", AlertStatus.Danger, "Текущее значение: 845K ₽ (порог: 1M ₽)");
             yield return new Alert("⚡", "Конверсия приближается к верхней границе", AlertStatus.Warning, "15.8% (диапазон: 14-18%)");
         }
 
@@ -79,7 +79,7 @@ namespace KPI.Pulse.UI.Services
             var items = new List<Node>();
 
             var rootItem = new Node("📊", "Все показатели");
-            
+
             var revenue = new Node("💰", "Выручка");
             var clients = new Node("👥", "Клиенты");
             var conversion = new Node("🔄", "Конверсия");
@@ -88,49 +88,111 @@ namespace KPI.Pulse.UI.Services
             rootItem.Children.Add(clients);
             rootItem.Children.Add(conversion);
 
-            revenue.Children.Add(new Leaf("🇷🇺", "РФ", "1.2M"));
-            revenue.Children.Add(new Leaf("🇰🇿", "СНГ", "845K"));
-            revenue.Children.Add(new Leaf("🌍", "Другое", "355K"));
+            revenue.Children.Add(new Leaf("🇷🇺", "РФ", "1.2M") { Parent = revenue, Series = RevenueStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
+            revenue.Children.Add(new Leaf("🇰🇿", "СНГ", "845K") { Parent = revenue, Series = RevenueStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
+            revenue.Children.Add(new Leaf("🌍", "Другое", "355K") { Parent = revenue, Series = RevenueStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
 
-            clients.Children.Add(new Leaf("🇷🇺", "РФ", "1.284"));
-            clients.Children.Add(new Leaf("🇰🇿", "СНГ", "780"));
-            clients.Children.Add(new Leaf("🌍", "Другое", "437"));
+            clients.Children.Add(new Leaf("🇷🇺", "РФ", "1.284") { Parent = clients, Series = GetClientsStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
+            clients.Children.Add(new Leaf("🇰🇿", "СНГ", "780") { Parent = clients, Series = GetClientsStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
+            clients.Children.Add(new Leaf("🌍", "Другое", "437") { Parent = clients, Series = GetClientsStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
 
-            conversion.Children.Add(new Leaf("🇷🇺", "РФ", "15%"));
-            conversion.Children.Add(new Leaf("🇰🇿", "СНГ", "7%"));
-            conversion.Children.Add(new Leaf("🌍", "Другое", "3%"));
+            conversion.Children.Add(new Leaf("🇷🇺", "РФ", "15%") { Parent = conversion, Series = GetConversionStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
+            conversion.Children.Add(new Leaf("🇰🇿", "СНГ", "7%") { Parent = conversion, Series = GetConversionStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
+            conversion.Children.Add(new Leaf("🌍", "Другое", "3%") { Parent = conversion, Series = GetConversionStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
+
+            foreach (var node in rootItem.Children.OfType<Node>())
+            {
+                node.InitSeries();
+            }
+
+            ((Node)rootItem).InitSeries();
 
             items.Add(rootItem);
             return items;
         }
 
-        public ISeries[] CreateSeries()
+        public ColumnSeries<double>[] CreateColumnSeries()
         {
-            var random = new Random();
-
-            var result = new List<ISeries>
+            var result = new List<ColumnSeries<double>>
             {
-                new ColumnSeries<double>
-                {
-                    Name = "Выручка",
-                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
-                    Fill = new SolidColorPaint(new SKColor(0x66, 0x7e, 0xea)) //#667eea
-                },
-                new ColumnSeries<double>
-                {
-                    Name = "Прибыль",
-                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
-                    Fill = new SolidColorPaint(new SKColor(0x48, 0xbb, 0x78)) //#48bb78
-                },
-                new ColumnSeries<double>
-                {
-                    Name = "Клиенты",
-                    Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
-                    Fill = new SolidColorPaint(new SKColor(0xf6, 0xad, 0x55)) //#f6ad55
-                }
+                RevenueColumnSeries("Выручка", new SKColor(0x66, 0x7e, 0xea)),
+                GetClientsColumnSeries("Клиенты", new SKColor(0xf6, 0xad, 0x55)),
+                GetConversionColumnSeries("Прибыль", new SKColor(0x48, 0xbb, 0x78))
             };
 
             return result.ToArray();
+        }
+
+        private ColumnSeries<double> RevenueColumnSeries(string name, SKColor color)
+        {
+            var random = new Random();
+
+            return new ColumnSeries<double>
+            {
+                Name = name,
+                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Fill = new SolidColorPaint(color) //#667eea
+            };
+        }
+
+        private ColumnSeries<double> GetClientsColumnSeries(string name, SKColor color)
+        {
+            var random = new Random();
+
+            return new ColumnSeries<double>
+            {
+                Name = name,
+                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Fill = new SolidColorPaint(color) //#f6ad55
+            };
+        }
+
+        private ColumnSeries<double> GetConversionColumnSeries(string name, SKColor color)
+        {
+            var random = new Random();
+
+            return new ColumnSeries<double>
+            {
+                Name = name,
+                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Fill = new SolidColorPaint(color) //#48bb78
+            };
+        }
+
+        private StackedColumnSeries<double> RevenueStackedColumnSeries(string name, SKColor color)
+        {
+            var random = new Random();
+
+            return new StackedColumnSeries<double>
+            {
+                Name = name,
+                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Fill = new SolidColorPaint(color) //#667eea
+            };
+        }
+
+        private StackedColumnSeries<double> GetClientsStackedColumnSeries(string name, SKColor color)
+        {
+            var random = new Random();
+
+            return new StackedColumnSeries<double>
+            {
+                Name = name,
+                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Fill = new SolidColorPaint(color) //#f6ad55
+            };
+        }
+
+        private StackedColumnSeries<double> GetConversionStackedColumnSeries(string name, SKColor color)
+        {
+            var random = new Random();
+
+            return new StackedColumnSeries<double>
+            {
+                Name = name,
+                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Fill = new SolidColorPaint(color) //#48bb78
+            };
         }
     }
 }
