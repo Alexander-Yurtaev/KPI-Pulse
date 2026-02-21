@@ -8,6 +8,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
 
 namespace KPI.Pulse.UI.ViewModels
 {
@@ -35,13 +36,7 @@ namespace KPI.Pulse.UI.ViewModels
         public BaseTreeItem SelectedNode
         {
             get => _selectedNode;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _selectedNode, value);
-                this.RaisePropertyChanged(nameof(XAxes));
-                this.RaisePropertyChanged(nameof(YAxes));
-                this.RaisePropertyChanged(nameof(Series));
-            }
+            set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
         }
 
         public ObservableCollection<StackedColumnSeries<double>> Series => SelectedNode is Node node ? node.Series : [];
@@ -73,6 +68,15 @@ namespace KPI.Pulse.UI.ViewModels
                     interactionVm.NavigateToNavItem.Handle(navItem.Id).Subscribe();
                 }
             });
+
+            this.WhenAnyValue(x => x.SelectedNode)
+                .Subscribe(async void (selected) =>
+                {
+                    this.RaisePropertyChanged(nameof(Series));
+                    await Task.Delay(100); // fix issue when chart is not shown
+                    this.RaisePropertyChanged(nameof(XAxes));
+                    this.RaisePropertyChanged(nameof(YAxes));
+                });
         }
     }
 }

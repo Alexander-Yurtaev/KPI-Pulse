@@ -89,21 +89,21 @@ namespace KPI.Pulse.UI.Services
             rootItem.Children.Add(clients);
             rootItem.Children.Add(conversion);
 
-            revenue.Children.Add(new Leaf("🇷🇺", "РФ", "1.2M") { Parent = revenue, Series = RevenueStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
-            revenue.Children.Add(new Leaf("🇰🇿", "СНГ", "845K") { Parent = revenue, Series = RevenueStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
-            revenue.Children.Add(new Leaf("🌍", "Другое", "355K") { Parent = revenue, Series = RevenueStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
+            revenue.Children.Add(new Leaf("🇷🇺", "РФ") { Parent = revenue, Series = RevenueStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
+            revenue.Children.Add(new Leaf("🇰🇿", "СНГ") { Parent = revenue, Series = RevenueStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
+            revenue.Children.Add(new Leaf("🌍", "Другое") { Parent = revenue, Series = RevenueStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
 
-            profit.Children.Add(new Leaf("🇷🇺", "РФ", "1.284") { Parent = profit, Series = GetProfitStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
-            profit.Children.Add(new Leaf("🇰🇿", "СНГ", "780") { Parent = profit, Series = GetProfitStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
-            profit.Children.Add(new Leaf("🌍", "Другое", "437") { Parent = profit, Series = GetProfitStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
+            profit.Children.Add(new Leaf("🇷🇺", "РФ") { Parent = profit, Series = GetProfitStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
+            profit.Children.Add(new Leaf("🇰🇿", "СНГ") { Parent = profit, Series = GetProfitStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
+            profit.Children.Add(new Leaf("🌍", "Другое") { Parent = profit, Series = GetProfitStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
 
-            clients.Children.Add(new Leaf("🇷🇺", "РФ", "1.284") { Parent = clients, Series = GetClientsStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
-            clients.Children.Add(new Leaf("🇰🇿", "СНГ", "780") { Parent = clients, Series = GetClientsStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
-            clients.Children.Add(new Leaf("🌍", "Другое", "437") { Parent = clients, Series = GetClientsStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
+            clients.Children.Add(new Leaf("🇷🇺", "РФ") { Parent = clients, Series = GetClientsStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
+            clients.Children.Add(new Leaf("🇰🇿", "СНГ") { Parent = clients, Series = GetClientsStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
+            clients.Children.Add(new Leaf("🌍", "Другое") { Parent = clients, Series = GetClientsStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
 
-            conversion.Children.Add(new Leaf("🇷🇺", "РФ", "15%") { Parent = conversion, Series = GetConversionStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
-            conversion.Children.Add(new Leaf("🇰🇿", "СНГ", "7%") { Parent = conversion, Series = GetConversionStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
-            conversion.Children.Add(new Leaf("🌍", "Другое", "3%") { Parent = conversion, Series = GetConversionStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
+            conversion.Children.Add(new Leaf("🇷🇺", "РФ") { Parent = conversion, Series = GetConversionStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
+            conversion.Children.Add(new Leaf("🇰🇿", "СНГ") { Parent = conversion, Series = GetConversionStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
+            conversion.Children.Add(new Leaf("🌍", "Другое") { Parent = conversion, Series = GetConversionStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
 
             foreach (var node in rootItem.Children.OfType<Node>())
             {
