@@ -2,7 +2,6 @@
 using KPI.Pulse.UI.Models.Enums;
 using KPI.Pulse.UI.ViewModels;
 using KPI.Pulse.UI.ViewModels.Tree;
-using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using ReactiveUI;
@@ -81,16 +80,22 @@ namespace KPI.Pulse.UI.Services
             var rootItem = new Node("📊", "Все показатели");
 
             var revenue = new Node("💰", "Выручка");
+            var profit = new Node("📈", "Прибыль");
             var clients = new Node("👥", "Клиенты");
             var conversion = new Node("🔄", "Конверсия");
 
             rootItem.Children.Add(revenue);
+            rootItem.Children.Add(profit);
             rootItem.Children.Add(clients);
             rootItem.Children.Add(conversion);
 
             revenue.Children.Add(new Leaf("🇷🇺", "РФ", "1.2M") { Parent = revenue, Series = RevenueStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
             revenue.Children.Add(new Leaf("🇰🇿", "СНГ", "845K") { Parent = revenue, Series = RevenueStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
             revenue.Children.Add(new Leaf("🌍", "Другое", "355K") { Parent = revenue, Series = RevenueStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
+
+            profit.Children.Add(new Leaf("🇷🇺", "РФ", "1.284") { Parent = profit, Series = GetProfitStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
+            profit.Children.Add(new Leaf("🇰🇿", "СНГ", "780") { Parent = profit, Series = GetProfitStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
+            profit.Children.Add(new Leaf("🌍", "Другое", "437") { Parent = profit, Series = GetProfitStackedColumnSeries("Другое", new SKColor(0x48, 0xbb, 0x78)) });
 
             clients.Children.Add(new Leaf("🇷🇺", "РФ", "1.284") { Parent = clients, Series = GetClientsStackedColumnSeries("РФ", new SKColor(0x66, 0x7e, 0xea)) });
             clients.Children.Add(new Leaf("🇰🇿", "СНГ", "780") { Parent = clients, Series = GetClientsStackedColumnSeries("СНГ", new SKColor(0xf6, 0xad, 0x55)) });
@@ -105,7 +110,7 @@ namespace KPI.Pulse.UI.Services
                 node.InitSeries();
             }
 
-            ((Node)rootItem).InitSeries();
+            rootItem.InitSeries();
 
             items.Add(rootItem);
             return items;
@@ -130,7 +135,7 @@ namespace KPI.Pulse.UI.Services
             return new ColumnSeries<double>
             {
                 Name = name,
-                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Values = Enumerable.Range(1, 7).Select(_ => Math.Ceiling(100 * random.NextDouble())).ToArray(),
                 Fill = new SolidColorPaint(color) //#667eea
             };
         }
@@ -142,7 +147,7 @@ namespace KPI.Pulse.UI.Services
             return new ColumnSeries<double>
             {
                 Name = name,
-                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Values = Enumerable.Range(1, 7).Select(_ => Math.Ceiling(100 * random.NextDouble())).ToArray(),
                 Fill = new SolidColorPaint(color) //#f6ad55
             };
         }
@@ -154,7 +159,7 @@ namespace KPI.Pulse.UI.Services
             return new ColumnSeries<double>
             {
                 Name = name,
-                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Values = Enumerable.Range(1, 7).Select(_ => Math.Ceiling(100 * random.NextDouble())).ToArray(),
                 Fill = new SolidColorPaint(color) //#48bb78
             };
         }
@@ -166,7 +171,19 @@ namespace KPI.Pulse.UI.Services
             return new StackedColumnSeries<double>
             {
                 Name = name,
-                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Values = Enumerable.Range(1, 7).Select(_ => Math.Ceiling(100 * random.NextDouble())).ToArray(),
+                Fill = new SolidColorPaint(color) //#667eea
+            };
+        }
+
+        private StackedColumnSeries<double> GetProfitStackedColumnSeries(string name, SKColor color)
+        {
+            var random = new Random();
+
+            return new StackedColumnSeries<double>
+            {
+                Name = name,
+                Values = Enumerable.Range(1, 7).Select(_ => Math.Ceiling(100 * random.NextDouble())).ToArray(),
                 Fill = new SolidColorPaint(color) //#667eea
             };
         }
@@ -178,7 +195,7 @@ namespace KPI.Pulse.UI.Services
             return new StackedColumnSeries<double>
             {
                 Name = name,
-                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Values = Enumerable.Range(1, 7).Select(_ => Math.Ceiling(100 * random.NextDouble())).ToArray(),
                 Fill = new SolidColorPaint(color) //#f6ad55
             };
         }
@@ -190,7 +207,7 @@ namespace KPI.Pulse.UI.Services
             return new StackedColumnSeries<double>
             {
                 Name = name,
-                Values = Enumerable.Range(1, 7).Select(_ => 100 * random.NextDouble()).ToArray(),
+                Values = Enumerable.Range(1, 7).Select(_ => Math.Ceiling(100 * random.NextDouble())).ToArray(),
                 Fill = new SolidColorPaint(color) //#48bb78
             };
         }

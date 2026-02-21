@@ -36,8 +36,8 @@ public class Node : BaseTreeItem
     {
         Series.Clear();
         var series = GetSeries();
-        Series.AddRange(series);
         YAxes.AddRange(GetYAxes(0, GetMax(series)));
+        Series.AddRange(series);
     }
 
     private StackedColumnSeries<double>[] GetSeries()
@@ -108,14 +108,6 @@ public class Node : BaseTreeItem
         Axis[] result = [
             new Axis
             {
-                //Labels = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
-                //LabelsRotation = 0,
-                //SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
-                //SeparatorsAtCenter = false,
-                //TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
-                //TicksAtCenter = true,
-                //ForceStepToMin = true,
-                //MinStep = 1
                 MinLimit = min,
                 MaxLimit = max
             }

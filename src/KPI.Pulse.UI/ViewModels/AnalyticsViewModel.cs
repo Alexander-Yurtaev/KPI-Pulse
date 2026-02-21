@@ -38,9 +38,9 @@ namespace KPI.Pulse.UI.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref _selectedNode, value);
-                this.RaisePropertyChanged(nameof(Series));
                 this.RaisePropertyChanged(nameof(XAxes));
                 this.RaisePropertyChanged(nameof(YAxes));
+                this.RaisePropertyChanged(nameof(Series));
             }
         }
 
