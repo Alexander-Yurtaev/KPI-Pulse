@@ -1,6 +1,7 @@
 ﻿using KPI.Pulse.UI.Models;
 using KPI.Pulse.UI.Models.Enums;
 using KPI.Pulse.UI.ViewModels;
+using KPI.Pulse.UI.ViewModels.Grid;
 using KPI.Pulse.UI.ViewModels.Tree;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
@@ -126,6 +127,23 @@ namespace KPI.Pulse.UI.Services
             };
 
             return result.ToArray();
+        }
+
+        //< th > Период</ th>
+        //< th > Выручка</ th>
+        //< th > Прибыль</ th>
+        //< th > Клиенты</ th>
+        //< th > Конверсия</ th>
+        //< th > Маржа</ th>
+        //< th > Статус</ th>
+
+        public IEnumerable<TableDataItem> GetTableData()
+        {
+            yield return new TableDataItem("Январь 2024", "1,245,000 ₽", "345,000 ₽", "1,245", "15.2%", "27.7%", TableDataStatus.Ready);
+            yield return new TableDataItem("Февраль 2024", "1,389,000 ₽", "389,000 ₽", "1,289", "16.1%", "28.0%", TableDataStatus.Ready);
+            yield return new TableDataItem("Март 2024", "1,567,000 ₽", "412,000 ₽", "1,334", "15.8%", "26.3%", TableDataStatus.InProcess);
+            yield return new TableDataItem("Апрель 2024", "1,623,000 ₽", "435,000 ₽", "1,378", "16.3%", "26.8%", TableDataStatus.Ready);
+            yield return new TableDataItem("Май 2024", "1,712,000 ₽", "458,000 ₽", "1,422", "16.7%", "26.8%", TableDataStatus.Ready);
         }
 
         private ColumnSeries<double> RevenueColumnSeries(string name, SKColor color)

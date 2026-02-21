@@ -3,6 +3,7 @@ using KPI.Pulse.UI.ViewModels.Tree;
 using LiveChartsCore.SkiaSharpView;
 using ReactiveUI;
 using System.Collections.Generic;
+using KPI.Pulse.UI.ViewModels.Grid;
 
 namespace KPI.Pulse.UI.Services;
 
@@ -17,4 +18,5 @@ public interface IUiService
     IEnumerable<Kpi> GetSavedKpis();
     IEnumerable<Node> KpiTreeItems();
     ColumnSeries<double>[] CreateColumnSeries();
+    IEnumerable<TableDataItem> GetTableData();
 }

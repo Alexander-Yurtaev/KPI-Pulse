@@ -18,6 +18,7 @@
 
 	<Application.Styles>
 		<FluentTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
         <Style Selector="Border.card">
 			<Setter Property="Background" Value="#faffffff"/>
 			<Setter Property="CornerRadius" Value="32"/>

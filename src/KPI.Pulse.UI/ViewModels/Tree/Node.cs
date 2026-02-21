@@ -17,7 +17,7 @@ public class Node : BaseTreeItem
         Children = [];
         XAxes = new ObservableCollection<Axis>(GetXAxes());
         YAxes = [];
-        Series = [];
+        _series = [];
     }
 
     public List<BaseTreeItem> Children { get; set; }

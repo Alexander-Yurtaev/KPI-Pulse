@@ -10,9 +10,10 @@ namespace KPI.Pulse.UI.ViewModels.Tree
     {
         public Leaf(string icon, string title) : base(icon, title)
         {
+            Series = new StackedColumnSeries<double>();
         }
 
-        public Node Parent { get; set; }
+        public Node Parent { get; set; } = null!;
         public string Value => Series.Values?.Sum().ToString(CultureInfo.InvariantCulture) ?? "0";
         public StackedColumnSeries<double> Series { get; init; }
     }

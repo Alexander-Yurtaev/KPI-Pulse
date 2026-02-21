@@ -97,7 +97,7 @@ namespace KPI.Pulse.UI.ViewModels
                     };
                     await settingService.SaveAsync(settings);
                 }
-                catch (Exception e)
+                catch
                 {
                     throw;
                 }
@@ -158,8 +158,9 @@ namespace KPI.Pulse.UI.ViewModels
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
+                // ignore
             }
         }
     }

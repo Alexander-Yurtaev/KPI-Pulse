@@ -1,5 +1,6 @@
 ﻿using KPI.Pulse.UI.Models;
 using KPI.Pulse.UI.Services;
+using KPI.Pulse.UI.ViewModels.Grid;
 using KPI.Pulse.UI.ViewModels.Tree;
 using LiveChartsCore.SkiaSharpView;
 using ReactiveUI;
@@ -32,8 +33,8 @@ namespace KPI.Pulse.UI.ViewModels
             init => this.RaiseAndSetIfChanged(ref _treeItems, value);
         }
 
-        private BaseTreeItem _selectedNode;
-        public BaseTreeItem SelectedNode
+        private BaseTreeItem? _selectedNode;
+        public BaseTreeItem? SelectedNode
         {
             get => _selectedNode;
             set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
@@ -44,6 +45,14 @@ namespace KPI.Pulse.UI.ViewModels
         public ObservableCollection<Axis> XAxes => SelectedNode is Node node ? node.XAxes : [];
 
         public ObservableCollection<Axis> YAxes => SelectedNode is Node node ? node.YAxes : [];
+
+        private ObservableCollection<TableDataItem> _tableData;
+
+        public ObservableCollection<TableDataItem> TableData
+        {
+            get => _tableData;
+            set => this.RaiseAndSetIfChanged(ref _tableData, value);
+        }
 
         public ReactiveCommand<NavItem, Unit> NavigateToNavItemCommand { get; }
 
@@ -60,6 +69,9 @@ namespace KPI.Pulse.UI.ViewModels
 
             var treeItems = uiService.KpiTreeItems();
             _treeItems = new ObservableCollection<Node>(treeItems);
+
+            var tableData = uiService.GetTableData();
+            _tableData = new ObservableCollection<TableDataItem>(tableData);
 
             NavigateToNavItemCommand = ReactiveCommand.Create<NavItem>(navItem =>
             {

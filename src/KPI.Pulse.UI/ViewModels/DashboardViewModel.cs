@@ -19,7 +19,7 @@ namespace KPI.Pulse.UI.ViewModels
         private readonly ObservableCollection<Goal> _goals;
 
         public string? UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
-        public IScreen HostScreen { get; }
+        public IScreen HostScreen { get; } = null!;
         public ViewModelActivator Activator { get; }
 
         public IEnumerable<Kpi> Kpis => _kpis;
