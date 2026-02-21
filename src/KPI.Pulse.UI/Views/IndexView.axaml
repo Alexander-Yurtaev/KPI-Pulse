@@ -190,12 +190,12 @@
                     </ItemsControl>
                 </Grid>
             </Border>
-            <ScrollViewer Grid.Row="1" Classes="nav">
+            <ScrollViewer Grid.Row="1" Classes="nav" HorizontalAlignment="Stretch">
                 <Border>
                     <Grid RowDefinitions="Auto,*">
                         <ItemsControl Grid.Row="0" 
                                       ItemsSource="{Binding NavItems}" 
-                                      HorizontalAlignment="Stretch">
+                                      HorizontalAlignment="Center">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <UniformGrid ColumnSpacing="20" RowSpacing="20" Columns="3"/>
