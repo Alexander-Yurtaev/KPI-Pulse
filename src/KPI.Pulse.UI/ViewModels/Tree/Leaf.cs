@@ -13,8 +13,7 @@ namespace KPI.Pulse.UI.ViewModels.Tree
             Series = new StackedColumnSeries<double>();
         }
 
-        public Node Parent { get; set; } = null!;
-        public string Value => Series.Values?.Sum().ToString(CultureInfo.InvariantCulture) ?? "0";
+        public double Value => Series.Values?.Sum() ?? 0;
         public StackedColumnSeries<double> Series { get; init; }
     }
 }

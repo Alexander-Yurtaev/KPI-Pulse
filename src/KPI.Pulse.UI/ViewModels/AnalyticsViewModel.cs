@@ -33,8 +33,8 @@ namespace KPI.Pulse.UI.ViewModels
             init => this.RaiseAndSetIfChanged(ref _treeItems, value);
         }
 
-        private BaseTreeItem? _selectedNode;
-        public BaseTreeItem? SelectedNode
+        private Node? _selectedNode;
+        public Node? SelectedNode
         {
             get => _selectedNode;
             set => this.RaiseAndSetIfChanged(ref _selectedNode, value);

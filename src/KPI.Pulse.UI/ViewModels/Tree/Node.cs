@@ -31,13 +31,26 @@ public class Node : BaseTreeItem
 
     public ObservableCollection<Axis> XAxes { get; init; }
     public ObservableCollection<Axis> YAxes { get; init; }
+    public int Total { get; set; }
+
+    public double Portion
+    {
+        get
+        {
+            if (Parent is null) return 1;
+            return 1.0*Total/Parent.Total;
+        }
+    }
 
     public void InitSeries()
     {
-        Series.Clear();
         var series = GetSeries();
+        
+        Series.Clear();
         YAxes.AddRange(GetYAxes(0, GetMax(series)));
         Series.AddRange(series);
+
+        Total = (int)Math.Ceiling(GetTotal());
     }
 
     private StackedColumnSeries<double>[] GetSeries()
@@ -129,5 +142,17 @@ public class Node : BaseTreeItem
             }
         }
         return (int)Math.Ceiling(max.Max() * 1.1);
+    }
+
+    private double GetTotal()
+    {
+        var leaves = Children.OfType<Leaf>().ToArray();
+        if (leaves.Any())
+        {
+            return leaves.Sum(l => l.Value);
+        }
+
+        var nodes = Children.OfType<Node>().ToArray();
+        return nodes.Sum(n => n.Total);
     }
 }

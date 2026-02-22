@@ -80,10 +80,10 @@ namespace KPI.Pulse.UI.Services
 
             var rootItem = new Node("📊", "Все показатели");
 
-            var revenue = new Node("💰", "Выручка");
-            var profit = new Node("📈", "Прибыль");
-            var clients = new Node("👥", "Клиенты");
-            var conversion = new Node("🔄", "Конверсия");
+            var revenue = new Node("💰", "Выручка") { Parent = rootItem };
+            var profit = new Node("📈", "Прибыль") { Parent = rootItem };
+            var clients = new Node("👥", "Клиенты") { Parent = rootItem };
+            var conversion = new Node("🔄", "Конверсия") { Parent = rootItem };
 
             rootItem.Children.Add(revenue);
             rootItem.Children.Add(profit);
