@@ -59,6 +59,17 @@
         <Style Selector="Border.tree-panel">
             <Setter Property="Width" Value="300"/>
         </Style>
+        <Style Selector="Border.total-container">
+            <Setter Property="Margin" Value="0,24,0,0"/>
+            <Setter Property="Padding" Value="0,16,0,0"/>
+            <Setter Property="BorderThickness" Value="0,1,0,0"/>
+            <Setter Property="BorderBrush" Value="#e2e8f0"/>
+        </Style>
+        <Style Selector="Grid.total-container">
+        </Style>
+        <Style Selector="TextBlock.total-value">
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
         <Style Selector="Border.chart-panel">
         </Style>
         <Style Selector="Border.data-grid">
@@ -150,29 +161,42 @@
                                 </TreeDataTemplate>
                             </TreeView.DataTemplates>
                         </TreeView>
-                        <Grid Grid.Row="2" 
-                              RowDefinitions="Auto,Auto,Auto,*"
-                              ColumnDefinitions="Auto,*,Auto">
-                            <StackPanel Grid.Row="0" 
-                                        Grid.Column="0"
-                                        Orientation="Horizontal">
-                                <TextBlock Text="Выбрано: "/>
-                                <TextBlock Text="{Binding SelectedNode.Title, TargetNullValue='-'}"/>
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       Grid.Column="0"
-                                       Text="Общая сумма:"/>
-                            <TextBlock Grid.Row="2"
-                                       Grid.Column="0"
-                                       Text="Доля в общем:"/>
+                        <Border Grid.Row="2" 
+                                Classes="total-container">
+                            <Grid Classes="total-container"
+                                  RowDefinitions="Auto,Auto,Auto,*"
+                                  ColumnDefinitions="Auto,*,Auto"
+                                  RowSpacing="4">
+                                <StackPanel Grid.Row="0" 
+                                            Grid.Column="0"
+                                            Orientation="Horizontal">
+                                    <StackPanel.Styles>
+                                        <Style Selector="TextBlock">
+                                            <Setter Property="FontSize" Value="13"/>
+                                            <Setter Property="Foreground" Value="#718096"/>
+                                            <Setter Property="Margin" Value="0,0,0,4"/>
+                                        </Style>
+                                    </StackPanel.Styles>
+                                    <TextBlock Text="Выбрано: "/>
+                                    <TextBlock Text="{Binding SelectedNode.Title, TargetNullValue='-'}"/>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="0"
+                                           Text="Общая сумма:"/>
+                                <TextBlock Grid.Row="2"
+                                           Grid.Column="0"
+                                           Text="Доля в общем:"/>
 
-                            <TextBlock Grid.Row="1"
-                                       Grid.Column="2"
-                                       Text="{Binding SelectedNode.Total, TargetNullValue=0}"/>
-                            <TextBlock Grid.Row="2"
-                                       Grid.Column="2"
-                                       Text="{Binding SelectedNode.Portion, TargetNullValue=0, StringFormat={}{0:P0}}"/>
-                        </Grid>
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="2"
+                                           Classes="total-value"
+                                           Text="{Binding SelectedNode.Total, TargetNullValue=0, StringFormat={}{0:N0}}"/>
+                                <TextBlock Grid.Row="2"
+                                           Grid.Column="2"
+                                           Classes="total-value"
+                                           Text="{Binding SelectedNode.Portion, TargetNullValue=0, StringFormat={}{0:P0}}"/>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
                 <Border Grid.Column="1" Classes="panel chart-panel">
