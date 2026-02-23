@@ -234,6 +234,14 @@
                           AutoGenerateColumns="False"
                           IsReadOnly="True"
                           GridLinesVisibility="All">
+                    <DataGrid.Styles>
+                        <Style Selector="DataGridRow:pointerover /template/ DataGridCellsPresenter">
+                            <Setter Property="Background" Value="#f7fafc"></Setter>
+                        </Style>
+                        <Style Selector="DataGridRow:selected /template/ DataGridCellsPresenter">
+                            <Setter Property="Background" Value="#f7fafc"></Setter>
+                        </Style>
+                    </DataGrid.Styles>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Период" Binding="{Binding Period}" Width="*"/>
                         <DataGridTextColumn Header="Выручка" Binding="{Binding Revenue}" Width="*"/>
