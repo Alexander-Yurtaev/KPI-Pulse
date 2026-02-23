@@ -1,4 +1,8 @@
-﻿using KPI.Pulse.UI.Models.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using KPI.Pulse.UI.Models.Enums;
 
 namespace KPI.Pulse.UI.ViewModels.Grid
 {
@@ -22,5 +26,12 @@ namespace KPI.Pulse.UI.ViewModels.Grid
         public string Conversion { get; set; }
         public string Margin { get; set; }
         public TableDataStatus Status { get; set; }
+
+        public string StatusDisplay =>
+            this.Status.GetType()
+                .GetMember(this.Status.ToString())
+                .FirstOrDefault()?
+                .GetCustomAttribute<DisplayAttribute>()?
+                .GetName() ?? "";
     }
 }

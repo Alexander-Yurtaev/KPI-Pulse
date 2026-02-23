@@ -141,7 +141,7 @@ namespace KPI.Pulse.UI.Services
         {
             yield return new TableDataItem("Январь 2024", "1,245,000 ₽", "345,000 ₽", "1,245", "15.2%", "27.7%", TableDataStatus.Ready);
             yield return new TableDataItem("Февраль 2024", "1,389,000 ₽", "389,000 ₽", "1,289", "16.1%", "28.0%", TableDataStatus.Ready);
-            yield return new TableDataItem("Март 2024", "1,567,000 ₽", "412,000 ₽", "1,334", "15.8%", "26.3%", TableDataStatus.InProcess);
+            yield return new TableDataItem("Март 2024", "1,567,000 ₽", "412,000 ₽", "1,334", "-15.8%", "26.3%", TableDataStatus.InProcess);
             yield return new TableDataItem("Апрель 2024", "1,623,000 ₽", "435,000 ₽", "1,378", "16.3%", "26.8%", TableDataStatus.Ready);
             yield return new TableDataItem("Май 2024", "1,712,000 ₽", "458,000 ₽", "1,422", "16.7%", "26.8%", TableDataStatus.Ready);
         }

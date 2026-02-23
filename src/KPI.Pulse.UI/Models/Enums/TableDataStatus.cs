@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KPI.Pulse.UI.Models.Enums
 {
     public enum TableDataStatus
     {
+        [Display(Name = "В процессе")]
         InProcess,
+
+        [Display(Name = "Выполнено")]
         Ready
     }
 }

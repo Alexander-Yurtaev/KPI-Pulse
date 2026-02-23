@@ -6,6 +6,8 @@
              xmlns:models="clr-namespace:KPI.Pulse.UI.Models"
              xmlns:tree="clr-namespace:KPI.Pulse.UI.ViewModels.Tree"
              xmlns:avalonia="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
+             xmlns:converters="clr-namespace:KPI.Pulse.UI.Converters"
+             xmlns:grid="clr-namespace:KPI.Pulse.UI.ViewModels.Grid"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="930"
              x:Class="KPI.Pulse.UI.Views.AnalyticsView"
              x:DataType="vm:AnalyticsViewModel"
@@ -73,6 +75,22 @@
         <Style Selector="Border.chart-panel">
         </Style>
         <Style Selector="Border.data-grid">
+        </Style>
+        <Style Selector="DataGrid">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#e2e8f0"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style Selector="DataGridCell.profit" x:CompileBindings="False">
+            <Setter Property="Foreground" Value="{Binding Profit, Converter={x:Static converters:StringToBrush.Instance}}"/>
+        </Style>
+        <Style Selector="DataGridCell.conversion" x:CompileBindings="False">
+            <Setter Property="Foreground" Value="{Binding Conversion, Converter={x:Static converters:StringToBrush.Instance}}"/>
+        </Style>
+        <Style Selector="DataGridColumnHeader">
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Foreground" Value="#4a5568"/>
+            <Setter Property="FontWeight" Value="600"/>
         </Style>
     </UserControl.Styles>
 
@@ -211,21 +229,46 @@
                 </Border>
             </Grid>
             <Border Grid.Row="2" Classes="panel data-grid">
-                <DataGrid Margin="20" 
-                          ItemsSource="{Binding TableData}"  
-                          AutoGenerateColumns="True"          
-                          IsReadOnly="True"                     
-                          GridLinesVisibility="All"
-                          BorderThickness="1" 
-                          BorderBrush="Gray">
+                <DataGrid Margin="20"
+                          ItemsSource="{Binding TableData}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          GridLinesVisibility="All">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Период" Binding="{Binding Period}" Width="*"/>
                         <DataGridTextColumn Header="Выручка" Binding="{Binding Revenue}" Width="*"/>
-                        <DataGridTextColumn Header="Прибыль" Binding="{Binding Profit}" Width="*"/>
+                        <DataGridTextColumn Header="Прибыль" 
+                                            Binding="{Binding Profit}" 
+                                            Width="*"
+                                            CellStyleClasses="profit"/>
                         <DataGridTextColumn Header="Клиенты" Binding="{Binding Clients}" Width="*"/>
-                        <DataGridTextColumn Header="Конверсия" Binding="{Binding Conversion}" Width="*"/>
+                        <DataGridTextColumn Header="Конверсия" 
+                                            Binding="{Binding Conversion}" 
+                                            Width="*"
+                                            CellStyleClasses="conversion"/>
                         <DataGridTextColumn Header="Маржа" Binding="{Binding Margin}" Width="*"/>
-                        <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
+                        <DataGridTemplateColumn Header="Статус" 
+                                                Width="*">
+                            <DataTemplate DataType="grid:TableDataItem">
+                                <Grid ColumnDefinitions="Auto,*"
+                                      RowDefinitions="*,Auto,*">
+                                    <Border Grid.Column="0"
+                                            Grid.Row="1"
+                                            Background="{Binding Status,
+			                                            Converter={x:Static converters:StatusToBrushConverter.Instance}, 
+                                                        ConverterParameter='background'}"
+                                            Padding="8,4"
+                                            CornerRadius="12">
+                                        <TextBlock Text="{Binding StatusDisplay}"
+                                                   FontSize="12"
+                                                   FontWeight="500"
+                                                   Foreground="{Binding Status, 
+                                                        Converter={x:Static converters:StatusToBrushConverter.Instance}, 
+                                                        ConverterParameter='foreground'}"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>
